@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/share2.css">
+    <title>利万嘉商品分享页面</title>
+</head>
+<body>
+    <header v-cloak id="header">
+        <public-carousel :imgs="imgs"></public-carousel>
+    </header>
+    <section v-cloak id="commodity">
+        <div>
+            <div class="title clearfix"><h3>{{goodsDetails.goodsName}}</h3><div class="enterShop">进入店铺</div></div>
+            <div class="style"><p>{{goodsDetails.goodsDescribe}}</p></div>
+            <div class="price"><strong>￥{{goodsDetails.nowPrice}}</strong><s>￥{{goodsDetails.commodityPrice}}</s><span v-if="goodsDetails.goodsExpressType" class="sendNow">支持立马送</span><span class="grade">{{goodsDetails.grade+"分"}}</span></div>
+            <div class="dispatching"><span>包邮: 0.00</span><span>销售量:{{goodsDetails.salesVolume }}</span><span>{{goodsDetails.address}}</span></div>
+        </div>
+        <ul class="service clearfix">
+            <li v-for="item in goodsDetails.label"><i></i>{{item}}</li>
+        </ul>
+        <div class="info">
+            <div @click="cutTab($event)" class="tab">
+                <div :class="{current: !type}">商品描述</div>
+                <div @click.once="initEvaluation" :class="{current: type}">商品评价</div>
+            </div>
+            <div>
+                <div v-show="!type" class="desc">
+                    <img v-for="img in goodsDetails.detailsImg" :src="img" alt="商品描述">
+                </div>
+                <div v-show="type" class="evaluation">
+                    <h3>用户评价<span>{{limit}}</span></h3>
+                    <ul  class="filter clearfix">
+                        <li @click="changeLabel(index)"  v-for="(item,index) in label" :class="{current: index == label_index}">{{item}}</li>
+                    </ul>
+                    <div v-for="user in comment"  class="content clearfix">
+                        <div class="user">
+                            <img class="head" :src="user.headImg" alt="">
+                            <p class="name">{{user.userNick}}</p>
+                            <div class="star">
+                                <i v-for="n in user.commentGrade"></i>
+                            </div>
+                            <p class="time">{{user.commentTime}}</p>
+                        </div>
+                        <div class="comment">
+                            <p class="user-reply">{{user.commentContent}}</p>
+                            <p class="pic">
+                                <img v-for="img in user.imgs" :src="img" alt="">
+                            </p>
+                            <div v-if="user.replyInfo" class="Shops-reply">
+                                <p class="Shops-reply-time">商家回复 <span>{{user.replyTime}}</span></p>
+                                <p class="Shops-reply-content">{{user.replyInfo}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section v-cloak id="same">
+        <h3><span>同城商品</span></h3>
+        <ul class="clearfix">
+            <li v-for="item in localGoods">
+                <img :src="item.goodsIndexImg" alt="">
+                <p>{{item.goodsDescribe}}</p>
+                <div v-if="item.nowPrice || item.commodityPrice"><strong>￥{{item.nowPrice}}</strong><s>{{item.commodityPrice}}</s><img src="images/add.png" alt=""></div>
+            </li>
+        </ul>
+    </section>
+    <footer id="footer">
+        <div class="other"><img src="images/personal.png" alt=""><img src="images/order.png" alt=""><img src="images/download.png" alt=""></div>
+        <div class="addCard">加入购物车</div>
+        <div @click="download" class="buyNow">立即购买</div>
+    </footer>
+</body>
+<script src="lib/init.js"></script>
+<script src="lib/vue.js"></script>
+<script src="lib/my.js"></script>
+<script src="js/share2.js"></script>
+</html>

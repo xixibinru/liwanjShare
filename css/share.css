@@ -1,0 +1,114 @@
+header {
+    line-height: 0.86rem;
+    color: #fff;
+    font-size: 0.38rem;
+    text-align: center;
+    background-color: #ec921a;
+}
+
+#banner {
+    padding-top: 0.2rem;
+    width: 7.5rem;
+    height: 4.6rem;
+    background: url(../images/banner.png) no-repeat center center / 100%;
+}
+
+#banner .showPhoneNumber {
+    position: relative;
+    font-size: 0.24rem;
+    color: #000;
+    width: 80%;
+    margin: 0 auto;
+    height: 0.4rem;
+    line-height: 0.4rem;
+    text-align: center;
+    overflow: hidden;
+}
+
+#banner ul {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+#banner ul span {
+    color: #d9d9d9;
+}
+
+#register {
+    padding: 0.2rem 0.13rem;
+    background-color: #f9f9f9;
+}
+
+#register .register {
+    width: 100%;
+    height: 100%;
+    padding: 0.65rem 0.65rem 0 0.65rem;
+    border-radius: 0.1rem;
+    background-color: #fff;
+}
+
+#register .info {
+    height: 1.11rem;
+    line-height: 1.1rem;
+    color: #333;
+    border-bottom: 1px solid #ccc;
+    vertical-align: middle;
+}
+
+#register .info img {
+    float: left;
+    margin-top: 0.38rem;
+    margin-left: 0.1rem;
+    width: 0.38rem;
+    height: 0.38rem;
+    margin-right: 0.28rem;
+}
+
+#register .info input[type="text"],
+#register .info input[type="password"] {
+    float: left;
+    width: 3rem;
+    font-size: 0.28rem;
+    height: 1rem;
+    margin-top: 0.05rem;
+}
+
+#register .info input[type="button"] {
+    float: left;
+    margin-top: 0.24rem;
+    width: 2.12rem;
+    height: 0.67rem;
+    border: 1px solid #ec921a;
+    font-size: 0.24rem;
+    color: #ec921a;
+    background-color: #fff;
+    border-radius: 0.08rem;
+}
+
+#register .protocol {
+    height: 0.6rem;
+    line-height: 0.6rem;
+    text-align: right;
+    color: #606060;
+    font-size: 0.26rem;
+}
+
+#register .protocol input[type="checkbox"] {
+    margin-top: -0.03rem;
+    width: 0.22rem;
+    height: 0.22rem;
+    margin-right: 0.2rem;
+}
+
+#register .register-btn {
+    width: 5.84rem;
+    height: 1rem;
+    background-color: #d43b33;
+    text-align: center;
+    color: #fff;
+    border-radius: 0.1rem;
+    font-size: 0.38rem;
+    margin-top: 0.3rem;
+}

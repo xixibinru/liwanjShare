@@ -1,0 +1,462 @@
+
+body {
+    background-color: #f2f2f2;
+}
+[v-cloak] {
+    display: none;
+}
+.carousel {
+    position: relative;
+    width:100%;
+    height: 100%;
+}
+.carousel ul {
+    position: relative;
+    overflow: hidden;
+    height: 100%;
+}
+.carousel li {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+.carousel .bar {
+    position: absolute;
+    left: 0.32rem;
+    bottom: 0.42rem;
+}
+.carousel .bar {
+    color: #fff;
+    font-size:0.26rem;
+}
+.carousel .bar span:nth-of-type(1){
+    font-size: 0.2rem;
+}
+.carousel-enter-active {
+    transform: translateX(0);
+    transition: transform 0.6s ease;
+}
+.carousel-leave-active {
+    transform: translateX(-100%);
+    transition: transform 0.6s ease;
+}
+.carousel-enter {
+    transform: translateX(100%);
+}
+.carousel-leave {
+    transform: translateX(0);
+}
+#header {
+    height: 5rem;
+}
+#header li img{
+    width: 100%;
+    height: 100%;
+}
+
+#commodity {
+    background-color: #fff;
+}
+
+#commodity .title {
+    padding: 0.36rem 0.4rem 0 0.4rem;
+}
+
+#commodity .title h3 {
+    width: 5.2rem;
+    font-size: 0.3rem;
+    /*line-height:0.46rem;*/
+    color: #181818;
+    float: left;
+}
+
+#commodity .title .enterShop {
+    float: right;
+    width: 1.4rem;
+    height: 0.46rem;
+    line-height: 0.46rem;
+    background-color: #ec921a;
+    vertical-align: middle;
+    font-size: 0.28rem;
+    color: #fff;
+    border-radius: 0.04rem;
+    text-align: center;
+}
+
+#commodity .style {
+    padding: 0.12rem 0.4rem;
+}
+
+#commodity .style p {
+    font-size: 0.24rem;
+    color: #a3a3a3;
+}
+
+#commodity .price {
+    position: relative;
+    padding: 0.12rem 0.4rem;
+    vertical-align: middle;
+    font-size: 0;
+    line-height: 0.36rem;
+}
+
+#commodity .price strong {
+    font-size: 0.36rem;
+    color: #ff0202;
+}
+
+#commodity .price s {
+    margin-left: 0.1rem;
+    font-size: 0.2rem;
+    color: #a1a1a1;
+}
+
+#commodity .price .sendNow {
+    margin-left: 0.2rem;
+    font-size: 0.22rem;
+    color: #b1b0b0;
+}
+
+#commodity .price .grade {
+    font-size: 0.3rem;
+    color: #ec921a;
+    position: absolute;
+    right: 0.4rem;
+    top: 0.12rem;
+}
+
+#commodity .dispatching {
+    position: relative;
+    padding: 0.12rem 0.4rem;
+    color: #b1b0b0;
+    font-size: 0.26rem;
+    text-align: center;
+    height: 0.5rem;
+}
+
+#commodity .dispatching span:nth-of-type(1) {
+    position: absolute;
+    left: 0.4rem;
+    top: 0.12rem;
+}
+
+#commodity .dispatching span:nth-of-type(2) {
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: 33.33%;
+    margin: 0 auto;
+}
+
+#commodity .dispatching span:nth-of-type(3) {
+    position: absolute;
+    right: 0.4rem;
+    top: 0.12rem;
+}
+
+#commodity .service {
+    border-top: 0.11rem solid #f2f2f2;
+    padding: 0.16rem 0 0.16rem 0.4rem;
+}
+
+#commodity .service li {
+    float: left;
+    margin-right: 0.4rem;
+    text-align: center;
+    line-height: 0.5rem;
+}
+
+#commodity .service i {
+    display: inline-block;
+    width: 0.22rem;
+    height: 0.22rem;
+    margin-right: 0.1rem;
+    background: url(../images/check.png) no-repeat 0 0 / 100%;
+}
+
+#commodity .info {
+    padding: 0 0.4rem 0.24rem 0.4rem;
+    border-top: 0.11rem solid #f2f2f2;
+    font-size: 0;
+}
+
+#commodity .tab {
+    padding-bottom: 0.04rem;
+}
+
+#commodity .tab div {
+    display: inline-block;
+    width: 50%;
+    text-align: center;
+    line-height: 0.8rem;
+    font-size: 0.38rem;
+    color: #6d6d6d;
+}
+
+#commodity .tab div.current {
+    color: #ec921a;
+    border-bottom: 0.04rem solid #ec921a;
+}
+
+#commodity .desc img {
+    width: 100%;
+}
+
+#commodity .evaluation h3 {
+    position: relative;
+    line-height: 0.72rem;
+    font-size: 0.26rem;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+}
+
+#commodity .evaluation h3 span {
+    float: right;
+    color: #ff0202;
+    font-size: 0.24rem;
+}
+
+#commodity .evaluation ul {
+    margin: 0 -0.12rem;
+    padding-bottom: 0.17rem;
+}
+
+#commodity .evaluation .filter li {
+    float: left;
+    width: 1.5rem;
+    height: 0.52rem;
+    line-height: 0.52rem;
+    border: 1px solid #ec921a;
+    border-radius: 0.08rem;
+    margin-top: 0.17rem;
+    font-size: 0.2rem;
+    color: #ec921a;
+    text-align: center;
+}
+
+#commodity .evaluation .filter li.current {
+    background-color: #ec921a;
+    color: #fff;
+}
+
+#commodity .evaluation .filter li + li {
+    margin-left: 0.3rem;
+}
+
+#commodity .evaluation .filter li:nth-of-type(5) {
+    margin-left: 0;
+}
+
+#commodity .content .user {
+    position: relative;
+    height: 0.02rem;
+    padding-top: 0.17rem;
+    margin: 0 -0.12rem;
+    height: 1.02rem;
+}
+
+#commodity .content .user img {
+    float: left;
+    width: 0.84rem;
+    height: 0.84rem;
+    border-radius: 50%;
+}
+
+#commodity .content .user .name {
+    position: absolute;
+    left: 1.1rem;
+    top: 0.34rem;
+    color: #101010;
+    font-size: 0.2rem;
+}
+
+#commodity .content .user .star {
+    position: absolute;
+    left: 1.05rem;
+    bottom: 0.04rem;
+    height: 0.24rem;
+}
+
+#commodity .content .user .star i {
+    display: inline-block;
+    width: 0.22rem;
+    height: 0.21rem;
+    background: url(../images/star.png) no-repeat 0 0 /100%;
+}
+
+#commodity .content .user .star i + i {
+    margin-left: 0.12rem;
+}
+
+#commodity .content .user .time {
+    position: absolute;
+    top: 0.4rem;
+    right: 0;
+    color: #959595;
+    font-size: 0.2rem;
+}
+
+#commodity .content .comment {
+    margin-top: 0.12rem;
+    padding: 0 0.1rem 0 1rem;
+}
+
+#commodity .content .comment .user-reply {
+    color: #080808;
+    font-size: 0.2rem;
+}
+
+#commodity .content .comment .pic {
+    position: relative;
+    margin-top: 0.1rem;
+    font-size: 0;
+}
+
+#commodity .content .comment .pic > img {
+    width: 1.8rem;
+    height: 1.8rem;
+    margin-top: 0.1rem;
+}
+
+#commodity .content .comment .pic > img + img {
+    margin-left: 0.1rem;
+}
+
+#commodity .content .comment .pic > img:nth-of-type(3n+1) {
+    margin-left: 0;
+}
+
+#commodity .content .comment .Shops-reply {
+    margin-top: 0.14rem;
+    background-color: #f2f2f2;
+    line-height: 0.5rem;
+    padding: 0.05rem 0.22rem;
+    color: #828282;
+    font-size: 0.2rem;
+}
+
+#commodity .content .comment .Shops-reply-time span {
+    float: right;
+}
+
+#same {
+    padding: 0 0.15rem 1.16rem 0.15rem;
+    background-color: #fff;
+}
+
+#same h3 {
+    position: relative;
+    background-color: #f2f2f2;
+    font-size: 0.28rem;
+    text-align: center;
+    line-height: 1.1rem;
+    color: #3b3b3b;
+}
+
+#same h3:before {
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: 6.18rem;
+    margin: 0 auto;
+    border: 1px solid #3b3b3b;
+    top: 50%;
+    content: '';
+}
+
+#same h3 span {
+    position: relative;
+    padding: 0.38rem;
+    width: 1.82rem;
+    background-color: #f2f2f2;
+}
+
+#same li {
+    float: left;
+    width: 3.5rem;
+}
+
+#same li:nth-of-type(2n) {
+    float: right;
+}
+
+#same li > img {
+    display: block;
+    width: 100%;
+    height: 3.18rem;
+}
+
+#same li p {
+    height: 0.88rem;
+    background-color: #fff;
+    font-size: 0.26rem;
+    color: #0b0a09;
+    line-height: 0.44rem;
+    padding: 0.14rem 0.2rem 0.04rem 0.2rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+#same li div {
+    position: relative;
+    padding: 0 0.2rem 0.04rem 0.2rem;
+    line-height: 0.48rem;
+}
+#same li div strong {
+    font-size: 0.26rem;
+    color: #ff0202;
+}
+
+#same li div s {
+    margin-left: 0.08rem;
+    font-size: 0.2rem;
+    color: #a1a1a1;
+}
+#same li div > img {
+    position: absolute;
+    right:0;
+    margin-right: 0.26rem;
+    width: 0.48rem;
+    height: 0.48rem;
+}
+
+#footer {
+    position: fixed;
+    bottom: 0;
+    width: 7.5rem;
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.26rem;
+    line-height: 1.1rem;
+    text-align: center;
+}
+
+#footer div {
+    float: left;
+}
+
+#footer .other {
+    width: 3.36rem;
+    background-color: #d4d4d4;
+}
+
+#footer .other img {
+    width: 0.52rem;
+    height: 0.52rem;
+    margin: 0 0.3rem;
+}
+
+#footer .addCard {
+    width: 1.98rem;
+    background-color: #ec921a;
+}
+
+#footer .buyNow {
+    width: 2.16rem;
+    background-color: #f90101;
+}
+
+
+
