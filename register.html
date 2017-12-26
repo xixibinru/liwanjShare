@@ -10,23 +10,25 @@
     <link rel="stylesheet" href="css/register.css">
 </head>
 <body>
-    <header id="header"><a href="">返回</a>注册</header>
-    <section id="register">
+    <header  id="header"><a href="">返回</a>注册</header>
+    <section  id="register">
         <h3>地址填写</h3>
         <module-address3></module-address3>
         <div><input type="text" placeholder="请输入详细地址"></div>
         <div><input type="text" placeholder="请输入邀请码"></div>
         <div><input type="text" placeholder="请输入手机号"></div>
-        <div><input type="text" style="width: 4.04rem;" placeholder="输入校验码"></div>
-        <div><input type="text" placeholder="短信验证码"></div>
+        <div><input type="text" style="width: 4.04rem;" placeholder="输入校验码"><module-vcode :width="'2.5rem'" :height="'0.82rem'"></module-vcode></div>
+        <div><input type="text" style="width: 4.94rem;" placeholder="短信验证码"><module-phone-verify class="send-code" :send-class="'send-class'" :reload-class="'reload-class'"></module-phone-verify></div>
         <div><input type="text" placeholder="设置密码    6-20位字母、数字组合"></div>
     </section>
     <footer id="footer">
         <div>注册</div>
     </footer>
 </body>
+
 <script src="lib/init.js"></script>
 <script src="lib/vue.js"></script>
 <script src="lib/my.js"></script>
+<script src="lib/vueComponent.js"></script>
 <script src="js/register.js"></script>
 </html>

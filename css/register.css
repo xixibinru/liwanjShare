@@ -18,14 +18,42 @@
     font-size: 0.28rem;
     border: 1px solid #e1e1e1;
     height: 0.84rem;
-    line-height: 0.84rem;
+    line-height: 0.8rem;
     background-color: #fff;
     padding-left: 0.3rem;
+    border-radius:  0.1rem;
 }
 #register > div + div {
     margin-top: 0.2rem;
 }
 #register > div > input {
     font-size: inherit;
-    width: 100%;
+    line-height: 0.8rem;
+    width: 80%;
+    vertical-align: top;
+}
+#register > div > canvas {
+    vertical-align: top;
+}
+#register > div .send-code {
+    vertical-align: top;
+    display: inline-block;
+    height: 0.82rem;
+    width: 1.64rem;
+    font-size: 0.24rem;
+    text-align: center;
+}
+#register > div .send-class {
+    color: #fff;
+    background-color: #ec921a;
+}
+#register > div .reload-class{
+    color: #5c5c5c;
+    background-color: #ddd;
+}
+#footer {
+    margin-top: 1.32rem;
+    height: 1.02rem;
+    width: 6.1rem;
+    background-color: #ec921a;
 }

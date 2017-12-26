@@ -1,0 +1,10 @@
+#main {
+    height: 3.16rem;
+    background: url(../images/success.png) no-repeat center 0.5rem /1.09rem 1.09rem;
+}
+#main p {
+    padding-top: 2.1rem;
+    text-align: center;
+    font-size: 0.36rem;
+    line-height: 100%;
+}

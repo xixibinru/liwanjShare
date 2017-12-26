@@ -11,7 +11,7 @@ window.onload = function () {
     var baseUrl = getUrl();
     function getRequest(){
         var url = location.search;
-        var jsonList={};
+        var jsonList = {};
         if(url.indexOf('?') != -1){
             var str = url.slice(url.indexOf("?") + 1);
             var strs = str.split("&");

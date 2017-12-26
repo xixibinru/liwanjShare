@@ -80,6 +80,9 @@ p{
 .clearfix {
     *zoom: 1;
 }
+[v-cloak] {
+    display: none;
+}
 .address3  > div {
     display: inline-block;
     text-align: center;
@@ -141,8 +144,11 @@ p{
     line-height: 0.98rem;
     border-radius: 0.1rem;
     margin: 0 auto;
-    background: #ff7b01;
+    background-color: #ec921a;
     font-size: 0.32rem;
     text-align: center;
+    color: #fff;
+}
+#footer a {
     color: #fff;
 }

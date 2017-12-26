@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>注册成功</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/success.css">
+</head>
+<body>
+    <header id="header"><a href="">返回</a>{{title}}</header>
+    <main v-cloak id="main">
+        <p>{{content}}</p>
+    </main>
+    <footer id="footer">确认</footer>
+</body>
+
+<script src="lib/init.js"></script>
+<script src="lib/vue.js"></script>
+<script src="lib/my.js"></script>
+<script src="lib/vueComponent.js"></script>
+<script>
+    window.addEventListener('load',function () {
+        var search = Vue.prototype.$getSearch();
+        console.log(search);
+        var header = new Vue({
+            el: '#header',
+            data: search
+        });
+        var main = new Vue({
+            el: '#main',
+            data: search
+        });
+    });
+
+</script>
+</html>
