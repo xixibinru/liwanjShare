@@ -1,0 +1,55 @@
+#login {
+    padding-top: 2.63rem;
+    background: url(../images/logo.png) no-repeat center 0.92rem /1.91rem 1.7rem  ;
+}
+#login > div {
+    position: relative;
+    width: 6.56rem;
+    margin: 0 auto;
+}
+#login .account,
+#login .pwd {
+    height: 1.41rem;
+    border-bottom: 1px solid #c2c2c2;
+    padding-left: 0.62rem;
+    padding-top:0.6rem;
+}
+#login .pwd {
+    position: relative;
+}
+#login div img {
+    position: absolute;
+    left: 0.12rem;
+    bottom: 0.21rem;
+    width: 0.28rem;
+    height: 0.39rem;
+}
+#login div input {
+    background: #f2f2f2;
+    width: 80%;
+    height:0.75rem;
+    line-height:0.75rem;
+    font-size: 0.3rem;
+}
+#login .pwd a {
+    position: absolute;
+    right: 0;
+    bottom: -0.48rem;
+    font-size: 0.24rem;
+    color: #f80208;
+}
+#footer {
+    position: relative;
+    margin-top: 1.52rem;
+    width: 6.56rem;
+    background-color: #ec921a;
+    cursor: pointer;
+}
+#footer a {
+    position: absolute;
+    right: 0;
+    bottom: -0.54rem;
+    font-size: 0.24rem;
+    line-height: 100%;
+    color: #a1a1a1;
+}

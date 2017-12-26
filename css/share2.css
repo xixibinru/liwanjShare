@@ -370,16 +370,21 @@ body {
     width: 1.82rem;
     background-color: #f2f2f2;
 }
-
+#same ul {
+    background-color: #f2f2f2;
+}
 #same li {
     float: left;
     width: 3.5rem;
+    background-color: #fff;
 }
 
 #same li:nth-of-type(2n) {
     float: right;
 }
-
+#same li:nth-of-type(2) ~ li {
+    margin-top: 0.17rem;
+}
 #same li > img {
     display: block;
     width: 100%;
@@ -388,7 +393,6 @@ body {
 
 #same li p {
     height: 0.88rem;
-    background-color: #fff;
     font-size: 0.26rem;
     color: #0b0a09;
     line-height: 0.44rem;
@@ -428,33 +432,39 @@ body {
     width: 7.5rem;
     color: #fff;
     font-weight: 700;
+    vertical-align: middle;
     font-size: 0.26rem;
-    line-height: 1.1rem;
     text-align: center;
+    cursor: pointer;
 }
 
-#footer div {
+#footer .other,
+#footer .buyNow {
+    height: 1.24rem;
     float: left;
 }
 
 #footer .other {
-    width: 3.36rem;
-    background-color: #d4d4d4;
+    width: 4.6rem;
+    background-color: #5b5b5b;
 }
-
+#footer .other li {
+    padding-top: 0.2rem;
+    width: 33.33%;
+    height: 100%;
+    float: left;
+}
 #footer .other img {
     width: 0.52rem;
     height: 0.52rem;
-    margin: 0 0.3rem;
 }
-
-#footer .addCard {
-    width: 1.98rem;
-    background-color: #ec921a;
+#footer .other p {
+    padding-top: 0.18rem;
+    font-size: 0.2rem;
 }
-
 #footer .buyNow {
-    width: 2.16rem;
+    line-height: 1.24rem;
+    width: 2.9rem;
     background-color: #f90101;
 }
 

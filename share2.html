@@ -71,10 +71,22 @@
             </li>
         </ul>
     </section>
-    <footer id="footer">
-        <div class="other"><img src="images/personal.png" alt=""><img src="images/order.png" alt=""><img src="images/download.png" alt=""></div>
-        <div class="addCard">加入购物车</div>
-        <div @click="download" class="buyNow">立即购买</div>
+    <footer id="footer" class="clearfix">
+        <ul class="other">
+            <li>
+                <img src="images/personal.png" alt="">
+                <p>个人中心</p>
+            </li>
+            <li>
+                <img src="images/order.png" alt="">
+                <p>我的订单</p>
+            </li>
+            <li @click="download" >
+                <img src="images/download.png" alt="">
+                <p>下载app</p>
+            </li>
+        </ul>
+        <div class="buyNow">立即购买</div>
     </footer>
 </body>
 <script src="lib/init.js"></script>
