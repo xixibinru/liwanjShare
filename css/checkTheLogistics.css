@@ -1,0 +1,150 @@
+#bar {
+    height: 0.1rem;
+    background: repeating-linear-gradient(75deg,
+    #f1edce 0, #f1edce .14rem,
+    #015294, #015294 .28rem,
+    #e70012 0, #e70012 .42rem
+    );
+}
+
+/*#bar div {*/
+/*!*height: 0.2rem;*!*/
+/*height: 100px;*/
+/*!*background-image: linear-gradient(0deg, #015294,#f1edce, #e70012);*!*/
+/*!*background-color: #006e00;*!*/
+/*background-image: linear-gradient(45deg,#015294 25%,#f1edce 25%,#f1edce 50%,#e70012 50%,#e70012 75%,#015294 75%,#015294 100%);*/
+/*!*background-size:40px 40px;*!*/
+/*background-size: 40px 40px;*/
+/*!*);*!*/
+/*}*/
+#logistics {
+
+}
+
+#logistics .logistics-orderInfo {
+    position: relative;
+    padding: 0.1rem 0.18rem;
+    line-height: 0.4rem;
+    background-color: #fff;
+    color: #777;
+}
+
+#logistics .logistics-orderInfo > p {
+    font-size: 0.24rem;
+}
+
+#logistics .logistics-orderInfo > p span.num {
+    color: #de9724;
+}
+
+#logistics .logistics-orderInfo > div {
+    position: absolute;
+    top: 0.2rem;
+    right: 0.3rem;
+    text-align: center;
+    line-height: 190%;
+}
+
+#logistics .logistics-orderInfo > div > p {
+    font-size: 0.3rem;
+    color: #de9724;
+}
+
+#logistics ul.logistics-state {
+    margin-top: 0.14rem;
+    padding: 0 0.2rem;
+    padding-left: 0.76rem;
+    background-color: #fff;
+    line-height: 0.3rem;
+    color: #aaa;
+    font-size: 0.3rem;
+    overflow: hidden;
+}
+
+#logistics .logistics-state li {
+    position: relative;
+    padding: 0.28rem 0;
+}
+#logistics .logistics-state li + li {
+    border-top: 1px solid #ccc;
+}
+
+#logistics .logistics-state li::before {
+    content: '';
+    position: absolute;
+    left: -0.46rem;
+    top: 0.27rem;
+    width: 0.2rem;
+    height: 0.2rem;
+    border-radius: 50%;
+    background-color: #aaa;
+}
+#logistics .logistics-state li::after {
+    content: '';
+    position: absolute;
+    left: -0.37rem;
+    top: 0.37rem;
+    width: 0.02rem;
+    height: 10rem;
+    background-color: #aaa;
+}
+#logistics .logistics-state li > p {
+    font-size: 0.3rem;
+    line-height:0.38rem;
+}
+#logistics .logistics-state li > p + p {
+    margin-top: 0.2rem;
+}
+#logistics .logistics-state li > p > span {
+    color: #82afd7;
+}
+#logistics .logistics-state li.current p{
+    color: #de9724;
+}
+#logistics .logistics-state li.current::before {
+    background-color: #de9724;
+    border: 0.04rem solid rgba(222,151,36,.4);
+}
+#logistics .logistics-state li.current::after {
+    background-color: #de9724;
+}
+#recommend {
+    padding: 0 -0.2rem 0 0.3rem;
+}
+#recommend > h3 {
+    line-height: 0.92rem;
+    background-color: #f2f2f2;
+    color: #777;
+    text-align: center;
+    margin-bottom: -0.2rem;
+}
+#recommend ul {
+    padding: 0 0.1rem 0.6rem 0.1rem;
+    font-size: 0;
+}
+#recommend li {
+    font-size: 0.3rem;
+    width:3.45rem;
+    background-color: #fff;
+    float: left;
+    margin-right: 0.2rem;
+    margin-top: 0.2rem;
+}
+#recommend li img {
+    display: block;
+    width: 3.45rem;
+    height: 3rem;
+}
+#recommend li p {
+    padding: 0 0.2rem;
+    padding-top: 0.1rem;
+    line-height: 0.34rem;
+}
+#recommend li p + p {
+    color: #de9724;
+    padding-top: 0;
+    font-size: 0.34rem;
+    line-height: 150%;
+    margin-left: -0.06rem;
+    padding-bottom: 0.1rem;
+}

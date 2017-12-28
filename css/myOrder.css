@@ -1,0 +1,105 @@
+#order {
+
+}
+#order .nav {
+    line-height: 0.82rem;
+    text-align: center;
+    background-color: #fff;
+}
+#order .nav div {
+    float: left;
+    width: 25%;
+    font-size: 0.28rem;
+    color: #8c8c8c;
+}
+#order .nav div.current {
+    color: #ec921a;
+    border-bottom: 0.04rem solid #ec921a;
+}
+#order ul.orderList {
+    margin-top: 0.11rem;
+    font-size: 0.3rem;
+}
+#order li {
+    padding: 0 0.4rem;
+    background-color: #fff;
+}
+#order li + li {
+    margin-top: 0.11rem;
+}
+#order li > h3 {
+    position: relative;
+    line-height: 0.9rem;
+}
+#order li > h3 > img {
+    width: 0.65rem;
+    height: 0.65rem;
+    margin-right: 0.23rem;
+}
+#order li > h3 > span.state {
+    position: absolute;
+    right: 0;
+    color: #ec921a;
+}
+#order li > .orderContent {
+    position: relative;
+    border-top: 1px solid #ccc;
+    padding-top: 0.4rem;
+}
+#order .orderContent > img {
+    position: absolute;
+    left:0;
+    width: 1.9rem;
+    height: 1.9rem;
+}
+#order .orderContent > .orderContent-desc {
+    padding-left: 2.3rem;
+}
+#order .orderContent > .orderContent-desc > h3 {
+    line-height: 0.64rem;
+}
+#order .orderContent > .orderContent-desc > p {
+    line-height: 120%;
+    margin-top: 0.12rem;
+    font-size: 0.24rem;
+    color: #a3a3a3;
+}
+#order .orderContent > .orderContent-desc > div {
+    line-height: 1.2rem;
+    color: #ff0202;
+    font-size: 0.34rem;
+}
+#order .orderContent > .orderContent-desc > div > span {
+    float: right;
+    color: #505050;
+    font-size: 0.26rem;
+}
+#order .orderContent >.orderContent-price {
+    border-top: 1px solid #ccc;
+    line-height: 0.78rem;
+    font-size: 0.24rem;
+    text-align: right;
+}
+#order .orderContent >.orderContent-other {
+    border-top: 1px solid #ccc;
+    line-height: 0.95rem;
+    text-align: right;
+}
+#order .orderContent >.orderContent-other > div {
+    display: inline-block;
+    vertical-align: middle;
+    width:1.68rem;
+    line-height: 0.62rem;
+    text-align: center;
+    border-radius: 0.1rem;
+    border: 1px solid #ccc;
+    color: #ccc;
+}
+#order .orderContent >.orderContent-other > div + div {
+    margin-left: 0.22rem;
+}
+#order .orderContent >.orderContent-other > div.current {
+    border: none;
+    background-color: #ec921a;
+    color: #fff;
+}

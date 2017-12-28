@@ -1,0 +1,218 @@
+#orderState {
+    position: relative;
+    padding-top: 0.8rem;
+    padding-left: 0.83rem;
+    height: 2.6rem;
+    line-height: 2.6rem;
+    background: linear-gradient(45deg, #ff7b00, #ffbb00);
+}
+#orderState P {
+    line-height: 100%;
+    color: #fff;
+    font-size: 0.4rem;
+}
+#orderState P + p {
+    padding-top: 0.28rem;
+    font-size:  0.28rem;
+}
+#orderState img.daifahuo {
+    position: absolute;
+    top: 0.53rem;
+    right: 1.01rem;
+    width: 1.96rem;
+    height: 1.52rem;
+}
+#orderState img.yifahuo {
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#order {
+    color: #414141;
+}
+
+#order .userInfo {
+    padding: 0 0.38rem;
+    background-color: #fff;
+}
+#order .userInfo h3 {
+    font-size: 0.32rem;
+    line-height:0.8rem;
+    border-bottom: 1px solid #ccc;
+}
+#order .userInfo p {
+    line-height: 0.84rem;
+    font-size: 0.28rem;
+}
+
+#order .userInfo > p + p {
+    margin-top: -0.18rem;
+}
+
+#order .userInfo p > span + span {
+    padding-left: 0.3rem;
+}
+
+/*#order .userInfo div {*/
+    /*font-size: 0.24rem;*/
+    /*line-height: 0.55rem;*/
+    /*border-top: 1px solid #ccc;*/
+/*}*/
+
+/*#order .userInfo div span {*/
+    /*float: right;*/
+    /*color: #fb8031;*/
+    /*font-size: 0.2rem;*/
+/*}*/
+
+#order .commodity {
+    background-color: #fff;
+    margin-top: 0.22rem;
+    /*padding: 0 0.33rem;*/
+    margin-bottom: 2.42rem;
+    color: #252525;
+}
+
+#order .commodity h3 {
+    position: relative;
+    line-height: 0.9rem;
+    /*color: #181818;*/
+    padding: 0 0.33rem;
+}
+
+#order .commodity h3 img {
+    vertical-align: middle;
+    width: 0.65rem;
+    height: 0.65rem;
+    margin-right: 0.24rem;
+
+}
+
+#order .commodity-Info {
+    position: relative;
+    border-top: 1px solid #ccc;
+    padding: 0 0.33rem;
+    padding-left: 2.03rem;
+}
+
+#order .commodity-Info img {
+    position: absolute;
+    left: 0.33rem;
+    top: 0.16rem;
+    width: 1.62rem;
+    height: 1.62rem;
+}
+
+#order .commodity-Info div {
+    padding-left: 0.12rem;
+}
+
+#order .commodity-Info-name {
+    line-height: 0.34rem;
+    padding: 0.07rem 0;
+    font-size: 0.24rem;
+}
+
+#order .commodity-Info-spec {
+    line-height: 0.5rem;
+    color: #a3a3a3;
+}
+
+#order .commodity-Info-price {
+    padding-top: 0.15rem;
+    line-height: 0.6rem;
+    color: #ff0202;
+    font-size: 0.2rem;
+}
+
+#order .commodity-Info-price strong {
+    font-size: 0.34rem;
+}
+
+#order .commodity-Info-price span {
+    float: right;
+    font-size: 0.28rem;
+    color: #6d6969;
+}
+
+#order .commodity-price {
+    padding: 0 0.33rem;
+    border-top: 0.14rem solid #f2f2f2;
+    padding-bottom: 0.4rem;
+}
+
+#order .commodity-price p {
+    line-height: 0.68rem;
+    font-size: 0.24rem;
+}
+#order .commodity-price p:nth-of-type(2){
+    border-bottom: 1px solid #ccc;
+}
+#order .commodity-price p span {
+    padding-left: 0.1rem;
+}
+
+
+
+#order .commodity-total{
+    line-height: 0.5rem;
+    font-size: 0.24rem;
+    padding: 0 0.33rem;
+    border-top: 0.14rem solid #f2f2f2;
+}
+#order .commodity-total p.last {
+    font-size: 0.26rem;
+    text-align: right;
+}
+#order .commodity-total p span {
+    float: right;
+}
+#order .commodity-total p span.red {
+    color: #ff0202;
+}
+#order .commodity-total p.last span {
+    float: none;
+}
+#order .commodity-total p.last span + span {
+    color: #ff0202;
+}
+#order .commodity-other {
+    height: 0.85rem;
+    text-align: right;
+    line-height: 0.85rem;
+    background-color: #f2f2f2;
+}
+#order .commodity-other div {
+    display: inline-block;
+    text-align: center;
+    width: 1.68rem;
+    height: 0.62rem;
+    line-height: 0.6rem;
+    border-radius: 0.1rem;
+ 
+    vertical-align: middle;
+}
+#order .commodity-other div:nth-of-type(1){
+    border: 1px solid #c2c2c2;
+    color: #b2b2b2;
+}
+#order .commodity-other div:nth-of-type(2){
+    border: 1px solid #ec921a;
+    color: #ec921a;
+}

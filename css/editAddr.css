@@ -1,0 +1,60 @@
+#editAddr {
+    margin-top: 0.04rem;
+    background-color: #fff;
+}
+#editAddr > div {
+    line-height: 1rem;
+    padding: 0 0.36rem;
+    color: #0f0f0f;
+}
+#editAddr > div + div {
+    border-top: 1px solid #ccc;
+}
+#editAddr > div > img {
+    width: 0.32rem;
+    height: 0.36rem;
+    margin-right: 0.21rem;
+}
+#editAddr > div > input {
+    vertical-align: top;
+    background-color: #fff;
+    font-size: 0.3rem;
+    line-height:1rem;
+    width: 6rem;
+}
+#editAddr .editAddr-addr {
+    position: relative;
+}
+#editAddr .editAddr-addr .address3{
+    position: absolute;
+    top: 0;
+    right:0;
+    width: 7.1rem;
+}
+#editAddr .editAddr-addr .address3 p {
+    color: #0f0f0f;
+}
+#editAddr .editAddr-default {
+    text-align: right;
+}
+#editAddr .editAddr-default.current {
+    color: #ec921a;
+}
+#editAddr .editAddr-default i {
+    display: inline-block;
+    vertical-align: middle;
+    width: 0.27rem;
+    height: 0.27rem;
+    border-radius: 50%;
+    border: 1px solid #434343;
+    margin-right: 0.14rem;
+}
+#editAddr .editAddr-default i.current {
+    border: none;
+    background-color: #ec921a;
+}
+#footer {
+    width: 7.5rem;
+    border-radius: 0;
+    margin-top: 0.54rem;
+}

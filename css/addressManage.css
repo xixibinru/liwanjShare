@@ -1,0 +1,81 @@
+#addr .noAddr {
+    display: none;
+    padding-top: 4.74rem;
+    height: 7.24rem;
+    background: url(../images/zanwudizhi.png) no-repeat center 2.08rem /2rem 2rem;
+}
+#addr .noAddr p {
+    font-size: 0.34rem;
+    text-align: center;
+    color: #4b4b4b;
+    line-height:100%;
+}
+#addr .noAddr div {
+    width: 2.78rem;
+    height: 0.8rem;
+    border: solid 1px #ec921a;
+    margin: 0 auto;
+    margin-top: 1.32rem;
+    text-align: center;
+    font-size: 0.3rem;
+    color: #ec921a;
+    line-height: 0.8rem;
+}
+#addr .noAddr div img {
+    width: 0.28rem;
+    height: 0.28rem;
+    margin-right: 0.17rem;
+}
+#addr .addrManage {
+    padding-top: 0.3rem ;
+    font-size: 0.2rem;
+    background-color: #fff;
+}
+#addr .addrManage-user {
+    padding: 0 0.38rem;
+    color: #0f0f0f;
+}
+#addr .addrManage-user-addr {
+    line-height: 0.8rem;
+}
+
+#addr .addrManage-edit {
+    padding: 0 0.42rem;
+    line-height: 0.7rem;
+    font-size: 0;
+    border-top: 1px solid #ccc;
+}
+#addr  .addrManage-edit div {
+    display: inline-block;
+    font-size: 0.2rem;
+    color: #434343;
+    vertical-align: middle;
+}
+#addr  .addrManage-edit div + div {
+    margin-left: 0.34rem;
+    cursor: pointer;
+}
+#addr  .addrManage-edit div img {
+    width: 0.26rem;
+    height: 0.26rem;
+    margin-right: 0.08rem;
+}
+#addr .addrManage-default {
+    float: right;
+}
+#addr .addrManage-default.current {
+    color: #ec921a;
+}
+#addr .addrManage-default i {
+    display: inline-block;
+    vertical-align: middle;
+    width: 0.22rem;
+    height: 0.22rem;
+    border-radius: 50%;
+    border: 1px solid #434343;
+    margin-right: 0.14rem;
+}
+#addr .addrManage-default i.current {
+    border: none;
+    background-color: #ec921a;
+}
