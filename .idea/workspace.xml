@@ -1,27 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="59817088-87dc-4ff1-b1d1-02e72e1324e7" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/addressManage.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/checkTheLogistics.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/confirmAnOrder.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/css/addressManage.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/css/checkTheLogistics.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/css/confirmAnOrder.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/css/editAddr.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/css/myOrder.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/css/orderDetail.css" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/editAddr.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/js/editAddr.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/myOrder.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/orderDetail.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/css/base.css" afterPath="$PROJECT_DIR$/css/base.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/css/share2.css" afterPath="$PROJECT_DIR$/css/share2.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/vueComponent.js" afterPath="$PROJECT_DIR$/lib/vueComponent.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/share2.html" afterPath="$PROJECT_DIR$/share2.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/template.html" afterPath="$PROJECT_DIR$/template.html" />
-    </list>
+    <list default="true" id="59817088-87dc-4ff1-b1d1-02e72e1324e7" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -329,12 +309,12 @@
       <workItem from="1514280551483" duration="1964000" />
       <workItem from="1514337890556" duration="7539000" />
       <workItem from="1514351399008" duration="16812000" />
-      <workItem from="1514423526136" duration="24638000" />
+      <workItem from="1514423526136" duration="24719000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="152769000" />
+    <option name="totallyTimeSpent" value="152850000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="9" y="-2" width="1382" height="784" extended-state="0" />
