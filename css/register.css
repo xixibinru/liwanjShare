@@ -15,7 +15,7 @@
     font-size:0;
 }
 #register > div {
-    font-size: 0.28rem;
+    font-size:0;
     border: 1px solid #e1e1e1;
     height: 0.84rem;
     line-height: 0.8rem;
@@ -27,33 +27,49 @@
     margin-top: 0.2rem;
 }
 #register > div > input {
-    font-size: inherit;
+    font-size: 0.28rem;
     line-height: 0.8rem;
     width: 80%;
     vertical-align: top;
 }
 #register > div > canvas {
     vertical-align: top;
+    float: right;
 }
 #register > div .send-code {
     vertical-align: top;
-    display: inline-block;
+    float: right;
     height: 0.82rem;
     width: 1.64rem;
     font-size: 0.24rem;
     text-align: center;
+    /*background-color: #ec921a;*/
+    /*color: #fff;*/
 }
-#register > div .send-class {
+#register > div .sendClass {
     color: #fff;
     background-color: #ec921a;
 }
-#register > div .reload-class{
+#register > div .reloadClass{
     color: #5c5c5c;
     background-color: #ddd;
 }
-#footer {
+#register .exitAccount {
+    position: absolute;
+    right: 0.4rem;
+    bottom: 1.95rem;
+    font-size: 0.3rem;
+    color: #f80208;
+}
+#register .register {
+    border-radius: 0.1rem;
+    margin: 0 auto;
+    font-size: 0.32rem;
+    text-align: center;
+    color: #fff;
     margin-top: 1.32rem;
     height: 1.02rem;
+    line-height: 1.02rem;
     width: 6.1rem;
     background-color: #ec921a;
 }

@@ -71,11 +71,11 @@
             </li>
         </ul>
     </section>
-    <section id="selectSize">
+    <section id="selectSize" v-show="show">
         <div>
             <div class="selectSize-title">
                 <img src="images/iphone.png" alt="">
-                <h3><span>￥170.8</span><img src="images/delete.png"></h3>
+                <h3><span>￥170.8</span><img @click="show=false" src="images/delete.png"></h3>
                 <p>库存1154件</p>
             </div>
             <ul class="selectSize-content">
@@ -113,11 +113,11 @@
     </section>
     <footer id="footer" class="clearfix">
         <ul class="other">
-            <li>
+            <li @click="handleEvent('个人中心')">
                 <img src="images/personal.png" alt="">
                 <p>个人中心</p>
             </li>
-            <li>
+            <li @click="handleEvent('我的订单')">
                 <img src="images/order.png" alt="">
                 <p>我的订单</p>
             </li>
@@ -126,11 +126,12 @@
                 <p>下载app</p>
             </li>
         </ul>
-        <div class="buyNow">立即购买</div>
+        <div @click="handleEvent('立即购买')" class="buyNow">立即购买</div>
     </footer>
 </body>
 <script src="lib/init.js"></script>
 <script src="lib/vue.js"></script>
+<script src="lib/vueComponent.js"></script>
 <script src="lib/my.js"></script>
 <script src="js/share2.js"></script>
 </html>

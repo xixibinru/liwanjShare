@@ -12,11 +12,11 @@
 <body>
 <header  id="header"><a href="">返回</a>地址管理</header>
 <section id="addr">
-    <div class="noAddr">
+    <div v-if="!show" class="noAddr">
         <p>暂无收货地址</p>
         <div><img src="images/add_1.png" alt="">添加收货地址</div>
     </div>
-    <div class="addrManage">
+    <div v-if="show" class="addrManage">
         <ul>
             <li>
                 <div class="addrManage-user">
@@ -32,10 +32,39 @@
         </ul>
     </div>
 </section>
-<footer ></footer>
 </body>
 <script src="lib/init.js"></script>
 <script src="lib/vue.js"></script>
 <script src="lib/my.js"></script>
 <script src="lib/vueComponent.js"></script>
+<script>
+    window.addEventListener('load',function () {
+        var baseUrl = localStorage.baseUrl;
+        var addr = new Vue({
+            el: '#addr',
+            data: {
+                show: false,
+            },
+            created: function () {
+                var self = this;
+                $my.ajax({
+                    url: baseUrl + '/consignee/loadConsignee.do',
+                    data: {
+                        token: localStorage.token
+                    },
+                    method: 'get',
+                    success: function (data) {
+                        var data = JSON.parse(data);
+                        if(data.state){
+                            if(data.data.length){
+                                self.show = true;
+                                console.log(data);
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    });
+</script>
 </html>

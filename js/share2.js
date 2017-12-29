@@ -1,4 +1,6 @@
-window.onload = function () {
+
+window.addEventListener('load',function () {
+    localStorage.share2Url = location.href;
     function getUrl() {
         if(location.origin){
             return location.origin;
@@ -9,6 +11,8 @@ window.onload = function () {
         }
     }
     var baseUrl = getUrl();
+    localStorage.baseUrl = baseUrl;
+    console.log(localStorage.baseUrl);
     function getRequest(){
         var url = location.search;
         var jsonList = {};
@@ -110,14 +114,14 @@ window.onload = function () {
                                             commodityType: requestData.commodityType
                                         },
                                         success: function (data) {
-                                           var data = JSON.parse(data);
-                                           if(data.state){
-                                               self.label = data.data[0].label;
-                                               self.limit = data.data[0].limit;
-                                               self.commentType_arr = self.label.map(function (item) {
-                                                   return item.substring(0,item.indexOf('('));
-                                               });
-                                           }
+                                            var data = JSON.parse(data);
+                                            if(data.state){
+                                                self.label = data.data[0].label;
+                                                self.limit = data.data[0].limit;
+                                                self.commentType_arr = self.label.map(function (item) {
+                                                    return item.substring(0,item.indexOf('('));
+                                                });
+                                            }
                                         }
                                     })
                                 }
@@ -135,10 +139,24 @@ window.onload = function () {
             }
         }
     });
+
+    var selectSize = new Vue({
+        el: '#selectSize',
+        data: {
+            show: false,
+        }
+    });
+
+
+
+
+
+
+
     var footer = new Vue({
         el: '#footer',
         data: {
-            ua: ''
+            ua: '' //设备类型
         },
         computed: {
             downUrl: function () {
@@ -148,6 +166,18 @@ window.onload = function () {
                     case 'android':
                         return 'http://a.app.qq.com/o/simple.jsp?pkgname=com.lwj.liwanjia';
                 }
+            },
+            userName: function () {
+                return localStorage.userName || '';
+            },
+            password: function () {
+                return localStorage.password || '';
+            },
+            isRegister: function () { //用户是否注册过
+                return + localStorage.isRegister || 0;
+            },
+            loginState: function () { //用户是否登录中 0为登录 1已登录
+                return + localStorage.loginState || 0;
             }
         },
         methods: {
@@ -159,6 +189,27 @@ window.onload = function () {
                         return;
                     }
                     location.href = this.downUrl;
+                }
+            },
+            handleEvent: function (txt) {
+                if(!this.isRegister){
+                    location.href = './register.html';
+                    return;
+                }
+                if(!this.loginState){
+                    location.href = './login.html';
+                    return;
+                }
+                switch (txt){
+                    case '个人中心':
+                        location.href = './personCenter.html';
+                        break;
+                    case '我的订单':
+                        location.href = './myOrder.html';
+                        break;
+                    case '立即购买':
+                        selectSize.show = true;
+                        break;
                 }
             }
         },
@@ -173,56 +224,4 @@ window.onload = function () {
             }
         }
     });
-
-    // if(location.href != 'http://localhost:63342/share/share2.html?token=0&userId=1&commodityType=2&commodityCode=3'){
-    //     location.href = 'http://localhost:63342/share/share2.html?token=0&userId=1&commodityType=2&commodityCode=3';
-    // }
-
-    // $my.ajax({
-    //     url: baseUrl +
-    // })
-
-    //轮播图组件
-    Vue.component('public-carousel',{
-        props: ['imgs'],
-        template:
-        '<div class="carousel">' +
-            '<transition-group tag="ul" name="carousel" >' +
-                '<li v-for="(img,index) in imgs" v-show="index == current_index" key="index">' +
-                    '<img :src="img" alt="">'+
-                '</li>'+
-            '</transition-group>' +
-            '<div class="bar"><span>{{current_index + 1}}</span>/<span>{{imgLength}}</span></div>'+
-        '</div>',
-        data: function () {
-            return {
-                current_index: 0,
-                timer: null
-            }
-        },
-        computed: {
-            imgLength: function () {
-                return this.imgs.length;
-            }
-        },
-        methods: {
-            autoPlay: function () {
-                this.current_index ++;
-                if(this.current_index == this.imgLength){
-                    this.current_index = 0;
-                }
-            },
-            play: function () {
-                this.timer = setInterval(this.autoPlay, 3000);
-            }
-        },
-        created: function () {
-            if(this.imgLength == 1) return;
-            this.play();
-        }
-    });
-    // $my.ajax({
-    //     url:
-    // })
-
-}
+});

@@ -14,22 +14,65 @@
     <section id="login">
         <div class="account">
             <img src="images/dianhua.png" alt="">
-            <input placeholder="账号" type="text">
+            <input v-model="name" placeholder="账号" type="text">
         </div>
         <div class="pwd">
             <img src="images/pwd.png" alt="">
-            <input placeholder="密码" type="password">
+            <input v-model="password" placeholder="密码" type="password">
             <a href="#">忘记密码?</a>
         </div>
-
     </section>
     <footer id="footer">
-       <div>登录</div>
-        <a href="">免费注册</a>
+       <div @click="login">登录</div>
+        <a href="./register.html">免费注册</a>
     </footer>
-
 </body>
 <script src="lib/init.js"></script>
 <script src="lib/vue.js"></script>
 <script src="lib/my.js"></script>
+<script>
+    window.addEventListener('load',function () {
+         var baseUrl = localStorage.baseUrl;
+         var login = new Vue({
+             el: '#login',
+             data: {
+                 name: localStorage.name || '',
+                 password: localStorage.password || '',
+             }
+         });
+         var footer = new Vue({
+             el: '#footer',
+             methods: {
+                 login: function () {
+                     $my.ajax({
+                         url: baseUrl + '/user/login.do',
+                         data: {
+                             name: login.name,
+                             password: login.password
+                         },
+                         method: 'post',
+                         success: function (data) {
+                             console.log(data);
+                             var data = JSON.parse(data);
+                             console.log(data);
+                             switch(data.state){
+                                 case 1:
+                                     localStorage.token = data.data;
+                                     localStorage.loginState = 1;
+                                     location.href = localStorage.share2Url;
+                                     break;
+                                 case 3:
+                                     alert(data.message);
+                                     break;
+                                 default:
+                                     alert('登录失败');
+                                     break;
+                             }
+                         }
+                     })
+                 }
+             }
+         })
+    });
+</script>
 </html>

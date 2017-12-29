@@ -446,53 +446,9 @@ body {
     height: 0.48rem;
 }
 
-#footer {
-    position: fixed;
-    bottom: 0;
-    width: 7.5rem;
-    color: #fff;
-    font-weight: 700;
-    vertical-align: middle;
-    font-size: 0.26rem;
-    text-align: center;
-    cursor: pointer;
-}
-
-#footer .other,
-#footer .buyNow {
-    height: 1.24rem;
-    float: left;
-}
-
-#footer .other {
-    width: 4.6rem;
-    background-color: #5b5b5b;
-}
-
-#footer .other li {
-    padding-top: 0.2rem;
-    width: 33.33%;
-    height: 100%;
-    float: left;
-}
-
-#footer .other img {
-    width: 0.52rem;
-    height: 0.52rem;
-}
-
-#footer .other p {
-    padding-top: 0.18rem;
-    font-size: 0.2rem;
-}
-
-#footer .buyNow {
-    line-height: 1.24rem;
-    width: 2.9rem;
-    background-color: #f90101;
-}
 
 #selectSize {
+    /*display: none;*/
     position: fixed;
     z-index: 1;
     top: 0;
@@ -624,5 +580,58 @@ body {
     text-align: center;
     font-size: 0.38rem;
 }
+
+
+#footer {
+    position: fixed;
+    bottom: 0;
+    width: 7.5rem;
+    height: 1.24rem;
+    color: #fff;
+    font-weight: 700;
+    vertical-align: middle;
+    font-size: 0.26rem;
+    text-align: center;
+    cursor: pointer;
+}
+
+#footer .other,
+#footer .buyNow {
+    height: 1.24rem;
+    float: left;
+}
+
+#footer .other {
+    width: 4.6rem;
+    background-color: #5b5b5b;
+}
+
+#footer .other li {
+    width: 33.33%;
+    height: 100%;
+    float: left;
+    padding-top: 0.18rem;
+}
+
+#footer .other img {
+    display: block;
+    width: 0.52rem;
+    height: 0.52rem;
+    margin: 0 auto;
+}
+
+#footer .other p {
+    padding-top: 0.1rem;
+    font-size: 0.2rem;
+    line-height: 0.42rem;
+}
+
+#footer .buyNow {
+    line-height: 1.24rem;
+    width: 2.9rem;
+    background-color: #f90101;
+}
+
+
 
 
