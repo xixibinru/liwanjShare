@@ -11,51 +11,98 @@
 </head>
 <body>
 <header  id="header"><a href="">返回</a>订单详情</header>
-<section id="orderState">
-    <p>代发货</p>
-    <p>等待商家发货中</p>
-    <img class="daifahuo" src="images/daifahuo.png" alt="">
-</section>
-<section id="order">
+
+<section v-if="order" id="order">
+    <div class="orderState">
+        <p>{{order.status}}</p>
+        <!--<p>等待商家发货中</p>-->
+        <img :class="{daifahuo:order.status=='待发货',yifahuo:order.status=='待收货'}" :src="order.status=='待发货'? 'images/daifahuo.png': 'images/yifahuo.png'" alt="">
+    </div>
     <div class="userInfo">
         <h3>收货地址</h3>
-        <p><span>离职小青年</span><span>13115850778</span></p>
-        <p>浙江省杭州市江岸区警方路</p>
+        <p><span>{{order.consignee.consigneeName}}</span><span>{{order.consignee.consigneePhone}}</span></p>
+        <p>{{order.consignee.consigneeAddress}}</p>
         <!--<div>预计送达时间<span>02月1日 09:00～18:00</span></div>-->
     </div>
     <div class="commodity">
-        <h3><img src="images/img1.png" alt="">恒都生鲜大超市</h3>
+        <h3><img :src="order.shopimage"  alt="">{{order.shopname}}</h3>
         <div class="commodity-Info">
-            <img src="images/img2.png" alt="">
+            <img :src="order.commodity[0].commodityimage" alt="">
             <div>
-                <p class="commodity-Info-name">森马短袖T恤男士2017夏装新款半袖上衣韩版圆 领字母印花休闲体恤 漂白1000 L</p>
-                <p class="commodity-Info-spec">颜色：白色，尺码：L</p>
-                <p class="commodity-Info-price">￥<strong>29.00</strong><span>*1</span></p>
+                <p class="commodity-Info-name">{{order.commodity[0].commodityname}}</p>
+                <p class="commodity-Info-spec">{{order.commodity[0].commodityinfo}}</p>
+                <p class="commodity-Info-price">￥<strong>{{order.commodity[0].commodityprice}}</strong><span>*{{order.commodity[0].commodityNum}}</span></p>
             </div>
         </div>
         <div class="commodity-price">
-            <p>订单编号:<span>1701542156112</span></p>
-            <p>下单时间:<span>2017-07-25 17:30</span></p>
-            <p>配送方式:<span>利万嘉物流</span></p>
-            <p>配送日期:<span>2017-10-10</span></p>
-            <p>留言:<span>留言留言留言留言</span></p>
+            <p>订单编号:<span>{{order.tradeId}}</span></p>
+            <p>下单时间:<span>{{$formatDate(order.orderTime)}}</span></p>
+            <p v-if="logistics">配送方式:<span>{{logistics.company}}</span></p>
+            <!--<p>配送日期:<span>2017-10-10</span></p>-->
+            <p>买家留言:<span>{{order.payInfo}}</span></p>
         </div>
         <div class="commodity-total">
-            <p>商品总额 <span>￥0.00</span></p>
-            <p>运费 <span>￥0.00</span></p>
-            <p>店铺优惠 <span class="red">-￥5.00</span></p>
-            <p class="last clearfix"><span>需付款: </span><span> ￥0.00</span></p>
+            <p>商品总额 <span>￥{{order.commodity[0].commodityprice * order.commodity[0].commodityNum}}</span></p>
+            <p>运费 <span>￥{{order.commodity[0].freight}}</span></p>
+            <!--<p>店铺优惠 <span class="red">-￥5.00</span></p>-->
+            <p class="last clearfix"><span>需付款: </span><span> ￥{{}}</span></p>
         </div>
         <div class="commodity-other">
             <div>取消订单</div>
             <div>联系商家</div>
         </div>
     </div>
-
 </section>
 </body>
 <script src="lib/init.js"></script>
 <script src="lib/vue.js"></script>
 <script src="lib/my.js"></script>
 <script src="lib/vueComponent.js"></script>
+<script>
+    window.addEventListener('load',function () {
+        var baseUrl = localStorage.baseUrl,
+            token = localStorage.token;
+        var order = new Vue({
+            el: '#order',
+            data: {
+                order: null, //订单详情
+                logistics: null //物流详情
+            },
+            created: function () {
+                var tradeId = Vue.prototype.$getSearch().tradeId,
+                    self = this;
+                console.log(tradeId);
+                //获取订单详情
+                $my.ajax({
+                    url: baseUrl + '/order/oneOrder',
+                    data: {
+                        token: token,
+                        tradeId: tradeId
+                    },
+                    method: 'get',
+                    success: function (data) {
+                        var data = JSON.parse(data);
+                        console.log(data);
+                        self.order = data.data;
+                    }
+                });
+//                 获取物流信息
+                $my.ajax({
+                    url: baseUrl + '/order/orderLogistics',
+                    data: {
+                        token: token,
+                        tradeId: tradeId
+                    },
+                    method: 'get',
+                    success: function (data) {
+                        var data = JSON.parse(data);
+                        console.log(data);
+                        self.logistics = data.data;
+                        console.log(self.logistics);
+                    }
+                });
+            }
+        });
+    });
+</script>
 </html>

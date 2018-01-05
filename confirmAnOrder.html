@@ -10,56 +10,116 @@
     <link rel="stylesheet" href="css/confirmAnOrder.css">
 </head>
 <body>
-<header  id="header"><a href="">返回</a>确认订单</header>
+<header  id="header"><a class="goBack">返回</a>确认订单</header>
 <section id="order">
     <div class="userInfo">
-        <p><span>离职小青年</span><span>13115850778</span></p>
-        <p>浙江省杭州市江岸区警方路</p>
-        <div>预计送达时间<span>02月1日 09:00～18:00</span></div>
+        <p><span>{{order.address.name}}</span><span>{{order.address.phone}}</span></p>
+        <p>{{order.address.address}}</p>
+        <!--<div>预计送达时间<span>02月1日 09:00～18:00</span></div>-->
     </div>
     <div class="commodity">
-        <h3><img src="images/img1.png" alt="">恒都生鲜大超市</h3>
+        <h3><img :src="order.shopInfo[0].shopImage" alt="商城图标">{{order.shopInfo[0].shopName}}</h3>
         <div class="commodity-Info">
-            <img src="images/img2.png" alt="">
+            <img :src="order.shopInfo[0].goods[0].goodsImg" alt="">
             <div>
-                <p class="commodity-Info-name">森马短袖T恤男士2017夏装新款半袖上衣韩版圆 领字母印花休闲体恤 漂白1000 L</p>
-                <p class="commodity-Info-spec">颜色：白色，尺码：L</p>
-                <p class="commodity-Info-price">￥<strong>29.00</strong><span>*1</span></p>
+                <p class="commodity-Info-name">{{order.shopInfo[0].goods[0].commodityName}}</p>
+                <p class="commodity-Info-spec">{{order.info}}</p>
+                <p class="commodity-Info-price">￥<strong>{{order.shopInfo[0].goods[0].nowPrice}}</strong><span>*{{order.shopInfo[0].goods[0].amount}}</span></p>
             </div>
         </div>
         <div class="commodity-price">
-            <p>商 品 总 价<span>￥129.00</span></p>
-            <p>配 送 费<span>￥5.00</span></p>
-            <p>店 铺 优 惠<span>-￥5.00</span></p>
-            <p>应 付<span>￥129.00</span></p>
+            <p>商 品 总 价<span>￥{{order.sumPrice}}</span></p>
+            <p>配 送 费<span>￥{{order.freight}}</span></p>
+            <!--<p>店 铺 优 惠<span>-￥{{order.discounts}}</span></p>-->
+            <p>应 付<span>￥{{totalPrice}}</span></p>
         </div>
         <div class="commodity-mark"><input type="text" placeholder="订单备注（30字内）"></div>
-        <div class="commodity-total">共<span>3</span>件商品,小计: ￥400<span></span></div>
+        <div class="commodity-total">共<span>{{order.sum}}</span>件商品,小计: ￥{{totalPrice}}<span></span></div>
     </div>
+    <footer class="goPay">
+        <div class="price-price">应付金额 <span>￥{{totalPrice}}</span></div>
+        <div @click="go_pay" class="price-goPay">去付款</div>
+    </footer>
 </section>
-<section id="pay">
+<section id="pay" v-show="show">
     <div class="content">
-        <h3>付款详情 <img src="images/delete.png" alt=""></h3>
+        <h3>付款详情 <img src="images/delete.png" @click="show = false" alt=""></h3>
         <p>需支付金额</p>
-        <p>100.00元</p>
+        <p>{{price}}元</p>
         <ul>
-            <li>
-                <img src="images/zhifubao.png" alt="">支付宝<i class="current"></i>
+            <li @click="type = 0">
+                <img src="images/zhifubao.png" alt="">支付宝<i :class="{current: !type}"></i>
             </li>
-            <li>
-                <img src="images/weixin.png" alt="">微信<i></i>
+            <li @click="type = 1">
+                <img src="images/weixin.png" alt="">微信<i :class="{current: type}"></i>
             </li>
         </ul>
-        <div>确认付款</div>
+        <div @click="pay">确认付款</div>
     </div>
 </section>
-<footer id="price">
-    <div class="price-price">应付金额 <span>￥29.00</span></div>
-    <div class="price-goPay">去付款</div>
-</footer>
 </body>
 <script src="lib/init.js"></script>
 <script src="lib/vue.js"></script>
 <script src="lib/my.js"></script>
 <script src="lib/vueComponent.js"></script>
+<script>
+
+    window.addEventListener('load',function () {
+        var token = localStorage.token,
+            baseUrl = localStorage.baseUrl,
+            confirmAnOrder = JSON.parse(localStorage.confirmAnOrder);
+        var order = new Vue({
+            el: '#order',
+            data: {
+                order: confirmAnOrder
+            },
+            computed: {
+                totalPrice: function () {
+                    return this.order.sumPrice + this.order.freight - this.order.discounts;
+                }
+            },
+            methods: {
+                go_pay: function () {
+                    pay.show = true;
+                }
+            },
+            created: function () {
+                console.log(confirmAnOrder);
+            }
+        });
+        var pay = new Vue({
+            el: '#pay',
+            data: {
+                order: confirmAnOrder,
+                show: false,
+                type: 0,
+                price: 0,
+                pay_data: {
+
+                }
+            },
+            methods: {
+                pay: function () {
+                    if(!this.type){ //支付宝
+                        $my.ajax({
+                            url: baseUrl + '/alipay/appPay',
+                            data: {
+                                tradeId: this.order.orderIds,
+                            },
+                            method: 'post',
+                            success: function (data) {
+                                console.log(data);
+                            }
+                        })
+                    }else { //微信
+
+                    }
+                }
+            },
+            created: function () {
+                this.price = order.totalPrice;
+            }
+        });
+    });
+</script>
 </html>

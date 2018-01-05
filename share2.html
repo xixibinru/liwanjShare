@@ -71,44 +71,26 @@
             </li>
         </ul>
     </section>
-    <section id="selectSize" v-show="show">
+    <section id="selectSize" v-if="show">
         <div>
             <div class="selectSize-title">
-                <img src="images/iphone.png" alt="">
-                <h3><span>￥170.8</span><img @click="show=false" src="images/delete.png"></h3>
-                <p>库存1154件</p>
+                <img :src="commodity.image_url" alt="商品图片">
+                <h3><span>￥{{commodity.nowPrice}}</span><img @click="show=false" src="images/delete.png"></h3>
+                <p>库存{{commodity.stock}}件</p>
             </div>
             <ul class="selectSize-content">
-                <li>
-                    <h3>颜色</h3>
+                <li v-for="(label,index) in commodity.lable">
+                    <h3>{{label.title}}</h3>
                     <div>
-                        <span class="current">白色</span>
-                        <span>银白色</span>
-                        <span>银白色</span>
-                        <span>银白色</span>
-                        <span>银白色</span>
-                        <span>银白色</span>
-                        <span>银白色</span>
-                    </div>
-                </li>
-                <li>
-                    <h3>颜色</h3>
-                    <div>
-                        <span class="current">白色</span>
-                        <span>银白色</span>
-                        <span>银白色</span>
-                        <span>银白色</span>
-                        <span>银白色</span>
-                        <span>银白色</span>
-                        <span>银白色</span>
+                        <span @click="selectLabel(label.title,type,index)" :class="{current: label.title === labelArr[index].title && type === labelArr[index].type}" v-for="type in label.type">{{type}}</span>
                     </div>
                 </li>
             </ul>
             <div class="selectSize-count">
                 数量
-                <div><span><img class="selectSize-count-delete" src="images/delete_1.png" alt=""></span><span><input type="text" value="1"></span><span><img class="selectSize-count-add" src="images/add_1.png" alt=""></span></div>
+                <div><span><img @click="num = --num < 0 ? 0 : num" class="selectSize-count-delete" src="images/delete_1.png" alt=""></span><span><input type="text" v-model="num"></span><span><img class="selectSize-count-add" @click="num++" src="images/add_1.png" alt=""></span></div>
             </div>
-            <div class="selectSize-buy">确定</div>
+            <div @click="buyNow" class="selectSize-buy">确定</div>
         </div>
     </section>
     <footer id="footer" class="clearfix">

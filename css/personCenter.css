@@ -1,11 +1,21 @@
 
 #person {
+    position: relative;
     height: 3.22rem;
     background: url(../images/bg_2.png) no-repeat center center/100%;
     padding-top: 0.82rem;
     text-align: center;
 }
-
+#person a {
+    position: absolute;
+    left: 0.2rem;
+    top: 0.5rem;
+    padding-left: 0.28rem;
+    font-size: 0.34rem;
+    line-height: 0.4rem;
+    background: url(../images/fanhui.png) no-repeat left center / 0.17rem 0.3rem;
+    color: #fff;
+}
 #person img {
     width: 1.17rem;
     height: 1.17rem;
@@ -50,6 +60,10 @@
     font-size: 0.3rem;
 }
 #footer {
-    margin-top: 3.65rem;
+    position: fixed;
+    bottom: 1.2rem;
+    left: 0;
+    right: 0;
+    width: 5.5rem;
     background-color: #ff7b01;
 }

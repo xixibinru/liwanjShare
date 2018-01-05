@@ -11,6 +11,7 @@
 </head>
 <body>
     <header id="person">
+        <a class="goBack">返回</a>
         <img src="images/moretouxiang.png" alt="">
         <p>下载app后设置昵称</p>
     </header>
@@ -41,11 +42,24 @@
             </li>
         </ul>
     </main>
-    <footer id="footer">
+    <footer @click="cancel" id="footer">
         <div>退出登录</div>
     </footer>
 </body>
 <script src="lib/init.js"></script>
 <script src="lib/vue.js"></script>
 <script src="lib/my.js"></script>
+<script>
+    window.addEventListener('load',function () {
+        var footer = new Vue({
+            el: '#footer',
+            methods: {
+                cancel: function () {
+                    localStorage.removeItem('token');
+                    window.location.href = localStorage.share2Url;
+                }
+            }
+        });
+    });
+</script>
 </html>

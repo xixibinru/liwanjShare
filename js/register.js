@@ -1,5 +1,6 @@
 window.addEventListener('load',function () {
     //获得省市区
+    console.log(1);
     var baseUrl = localStorage.baseUrl;
     var register = new Vue({
         el: '#register',
@@ -47,6 +48,7 @@ window.addEventListener('load',function () {
         methods: {
             sendSMS: function () { //发送短信验证码
                 var self = this;
+                if(self.state) return;
                   $my.ajax({
                       url: baseUrl + '/user/sendSMS.do',
                       data: {
@@ -66,7 +68,7 @@ window.addEventListener('load',function () {
             },
             countdown: function () {
                 var self = this,
-                    time = 3;
+                    time = 60;
                 this.timer = setInterval(function () {
                     console.log(time);
                     time -= 1;
@@ -96,7 +98,6 @@ window.addEventListener('load',function () {
                         localStorage.name = data.data.name;
                         localStorage.password = self.userData.password;
                         localStorage.address = data.data.address;
-                        localStorage.loginState = 0; //登录状态 是否登录中
                         localStorage.isRegister = 1; // 是否已注册  0未注册 1已注册
                         location.href = './login.html';
                     }

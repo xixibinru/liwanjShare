@@ -1,5 +1,18 @@
+
 #order {
 
+}
+#order .bg {
+    position: fixed;
+    top: 50%;
+    width: 7.5rem;
+    height: 3rem;
+    text-align: center;
+    font-size: 0.4rem;
+    padding-top: 2.68rem;
+    line-height: 1rem;
+    color: #909090;
+    background: url(../images/zanwudingdan.png) no-repeat center 0 / 2.68rem 2.68rem;
 }
 #order .nav {
     line-height: 0.82rem;
@@ -8,7 +21,7 @@
 }
 #order .nav div {
     float: left;
-    width: 25%;
+    width: 20%;
     font-size: 0.28rem;
     color: #8c8c8c;
 }
@@ -41,35 +54,37 @@
     right: 0;
     color: #ec921a;
 }
-#order li > .orderContent {
+#order li  .orderContent {
+    display: block;
     position: relative;
     border-top: 1px solid #ccc;
     padding-top: 0.4rem;
 }
-#order .orderContent > img {
+#order .orderContent > a > img {
     position: absolute;
     left:0;
     width: 1.9rem;
     height: 1.9rem;
 }
-#order .orderContent > .orderContent-desc {
+#order .orderContent > a > .orderContent-desc {
+    display: block;
     padding-left: 2.3rem;
 }
-#order .orderContent > .orderContent-desc > h3 {
+#order .orderContent > a > .orderContent-desc > h3 {
     line-height: 0.64rem;
 }
-#order .orderContent > .orderContent-desc > p {
+#order .orderContent > a  > .orderContent-desc > p {
     line-height: 120%;
     margin-top: 0.12rem;
     font-size: 0.24rem;
     color: #a3a3a3;
 }
-#order .orderContent > .orderContent-desc > div {
+#order .orderContent > a  > .orderContent-desc > div {
     line-height: 1.2rem;
     color: #ff0202;
     font-size: 0.34rem;
 }
-#order .orderContent > .orderContent-desc > div > span {
+#order .orderContent > a  > .orderContent-desc > div > span {
     float: right;
     color: #505050;
     font-size: 0.26rem;
@@ -101,5 +116,8 @@
 #order .orderContent >.orderContent-other > div.current {
     border: none;
     background-color: #ec921a;
+    color: #fff;
+}
+#order .orderContent >.orderContent-other > div.current > a {
     color: #fff;
 }

@@ -70,6 +70,7 @@
 
 #order .commodity-Info div {
     padding-left: 0.12rem;
+    padding-bottom: 0.18rem;
 }
 
 #order .commodity-Info-name {
@@ -137,6 +138,36 @@
 #order .commodity-total span:nth-of-type(1){
     color: #ec921a;
 }
+
+#order .goPay {
+    position: fixed;
+    bottom: 0;
+    left:0;
+    right:0;
+    margin: 0 auto;
+    width: 7.5rem;
+    height: 0.96rem;
+    line-height: 0.96rem;
+    font-size: 0;
+}
+#order .goPay > div {
+    font-size: 0.28rem;
+    display: inline-block;
+}
+#order .goPay .price-price {
+    padding-left: 0.33rem;
+    width: 4.6rem;
+    background-color: #fff;
+    color: #ff0202;
+}
+#order .goPay .price-goPay {
+    width: 2.9rem;
+    background-color: #ec921a;
+    color: #fff;
+    text-align: center;
+}
+
+
 #pay {
     position: fixed;
     left:0;
@@ -227,30 +258,3 @@
 
 
 
-#price {
-    position: fixed;
-    bottom: 0;
-    left:0;
-    right:0;
-    margin: 0 auto;
-    width: 7.5rem;
-    height: 0.96rem;
-    line-height: 0.96rem;
-    font-size: 0;
-}
-#price > div {
-    font-size: 0.28rem;
-    display: inline-block;
-}
-#price .price-price {
-    padding-left: 0.33rem;
-    width: 4.6rem;
-    background-color: #fff;
-    color: #ff0202;
-}
-#price .price-goPay {
-    width: 2.9rem;
-    background-color: #ec921a;
-    color: #fff;
-    text-align: center;
-}

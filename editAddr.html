@@ -5,25 +5,127 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>编辑地址</title>
     <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/editAddr.css">
 </head>
 <body>
-<header id="header"><a href="">返回</a>编辑地址</header>
+<header id="header"><a class="goBack">返回</a>编辑地址</header>
 <section id="editAddr">
-    <div><img src="images/shouhuoren.png" alt=""><input type="text" placeholder="收货人"></div>
-    <div><img src="images/dianhua.png" alt=""> <input type="text" placeholder="联系电话"></div>
-    <div class="editAddr-addr"><img src="images/dizhi.png" alt=""><module-address3></module-address3></div>
-    <div><img src="images/jiedao.png" alt=""><input type="text" placeholder="街道"></div>
-    <div><img src="images/xiangxidizhi.png" alt=""><input type="text" placeholder="详细地址"></div>
-    <div class="editAddr-default current"><i class="current"></i>设为默认地址</div>
+    <div><img src="images/shouhuoren.png" alt=""><input type="text" v-model="addrInfo.consigneeName" placeholder="收货人"></div>
+    <div><img src="images/dianhua.png" alt=""> <input v-model="addrInfo.consigneePhone" type="text" placeholder="联系电话"></div>
+    <div class="editAddr-addr"><img src="images/dizhi.png" alt=""><module-address3 :_province="addrInfo.oneAddress" :_city="addrInfo.twoAddress" :_counties="addrInfo.threeAddress" @give_address3="get_address3($event)"></module-address3></div>
+    <div><img src="images/jiedao.png" alt=""><input v-model="addrInfo.fourAddress" type="text" placeholder="街道"></div>
+    <div><img src="images/xiangxidizhi.png" alt=""><input v-model="addrInfo.fiveAddress" type="text" placeholder="详细地址"></div>
+    <div @click="setDefaultAddr" :class="{current: addrInfo.isFist}" class="editAddr-default"><i :class="{current: addrInfo.isFist}"></i>设为默认地址</div>
 </section>
-<footer id="footer">保存</footer>
+<footer id="footer" @click="addOrEditAddr">保存</footer>
 </body>
 <script src="lib/init.js"></script>
 <script src="lib/vue.js"></script>
 <script src="lib/my.js"></script>
 <script src="lib/vueComponent.js"></script>
-<script src="js/editAddr.js"></script>
+<script>
+    window.addEventListener('load',function () {
+        var baseUrl = localStorage.baseUrl,
+            token = localStorage.token;
+        var editAddr = new Vue({
+            el: '#editAddr',
+            data: {
+                addrInfo: {
+                    token: token,
+                    consigneeId: localStorage.consigineeId,
+                    consigneeName: '',
+                    consigneePhone: '',
+                    oneAddress: null,
+                    twoAddress: null,
+                    threeAddress: null,
+                    fourAddress: '',
+                    fiveAddress: '',
+                    isFist: 1
+                }
+            },
+            methods: {
+                setDefaultAddr: function () {
+                    this.addrInfo.isFist = this.addrInfo.isFist ? 0 : 1
+                },
+                get_address3: function ($event) {
+                    this.addrInfo.oneAddress = $event[0];
+                    this.addrInfo.twoAddress = $event[1];
+                    this.addrInfo.threeAddress = $event[2];
+                }
+            },
+            created: function () {
+                var self = this;
+                if(localStorage.consigneeId){
+                    $my.ajax({
+                        url: baseUrl + '/consignee/relevantConsignee.do',
+                        data: {
+                            token: token,
+                            consigneeId: localStorage.consigneeId
+                        },
+                        method: 'post',
+                        success: function (data) {
+                            var data = JSON.parse(data);
+                            if(data.state){
+                                console.log(data);
+                                self.addrInfo.consigneeId = localStorage.consigneeId;
+                                self.addrInfo.consigneeName = data.data.consigneeName;
+                                self.addrInfo.consigneePhone = data.data.consigneePhone;
+                                self.addrInfo.oneAddress = data.data.oneAddress;
+                                self.addrInfo.twoAddress = data.data.twoAddress;
+                                self.addrInfo.threeAddress = data.data.threeAddress;
+                                self.addrInfo.fourAddress = data.data.fourAddress;
+                                self.addrInfo.fiveAddress = data.data.fiveAddress;
+                                self.addrInfo.isFist = data.data.fist;
+                            }else {
+                                Vue.prototype.$goLogin();
+                            }
+                        }
+                    })
+                }
+            }
+        });
+        var footer = new Vue({
+            el: '#footer',
+            methods: {
+                addOrEditAddr: function () {
+                    console.log(editAddr.addrInfo);
+                    if(this.$isNotFilled(editAddr.addrInfo)) return;
+                    if(localStorage.consigneeId){ //编辑地址
+                        $my.ajax({
+                            url: baseUrl + '/consignee/compileConsignee.do',
+                            data: editAddr.addrInfo,
+                            method: 'post',
+                            success: function (data) {
+                                var data = JSON.parse(data);
+                                if(data.state){
+                                    alert('修改成功');
+                                }else {
+                                    Vue.prototype.$goLogin();
+                                }
+                            }
+                        });
+                    }else { //添加地址
+                        $my.ajax({
+                            url: baseUrl + '/consignee/addNewConsignee.do',
+                            data: editAddr.addrInfo,
+                            method: 'post',
+                            success: function (data) {
+                                var data = JSON.parse(data);
+                                console.log(data);
+                                if(data.state){
+                                    alert('添加成功');
+                                }else {
+                                    Vue.prototype.$goLogin();
+                                }
+                            }
+                        });
+                    }
+                }
+            }
+        });
+    });
+
+</script>
 </html>

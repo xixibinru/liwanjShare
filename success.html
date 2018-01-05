@@ -5,7 +5,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>注册成功</title>
+    <title></title>
     <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/success.css">
 </head>
@@ -14,7 +14,7 @@
     <main v-cloak id="main">
         <p>{{content}}</p>
     </main>
-    <footer id="footer">确认</footer>
+    <footer id="footer"><a href="./login.html">确认</a></footer>
 </body>
 
 <script src="lib/init.js"></script>
@@ -23,6 +23,10 @@
 <script src="lib/vueComponent.js"></script>
 <script>
     window.addEventListener('load',function () {
+//        search = {
+//            title: '注册',
+//            content: '注册成功'
+//        }
         var search = Vue.prototype.$getSearch();
         console.log(search);
         var header = new Vue({
@@ -31,7 +35,10 @@
         });
         var main = new Vue({
             el: '#main',
-            data: search
+            data: search,
+            created: function () {
+                document.title = search.title;
+            }
         });
     });
 

@@ -10,28 +10,32 @@
     <link rel="stylesheet" href="css/addressManage.css">
 </head>
 <body>
-<header  id="header"><a href="">返回</a>地址管理</header>
+<header  id="header"><a class="goBack">返回</a>地址管理</header>
 <section id="addr">
     <div v-if="!show" class="noAddr">
         <p>暂无收货地址</p>
-        <div><img src="images/add_1.png" alt="">添加收货地址</div>
+        <div @click="add_addr"><img src="images/add_1.png" alt="">添加收货地址</div>
     </div>
     <div v-if="show" class="addrManage">
         <ul>
-            <li>
+            <li v-for="addr in addrList">
                 <div class="addrManage-user">
-                    <p class="addrManage-user-name"><span>李晓先生</span> <span>13254655842</span></p>
-                    <p class="addrManage-user-addr">浙江省温州市龙湾区蒲州街道红莲区29号</p>
+                    <p class="addrManage-user-name"><span>{{addr.consigneeName}}</span><span>{{addr.consigneePhone}}</span></p>
+                    <p class="addrManage-user-addr">{{addr.consigneeAddress}}</p>
                 </div>
                 <div class="addrManage-edit">
-                    <div><img src="images/bianji.png" alt="">编辑</div>
-                    <div><img src="images/shangchu.png" alt="">删除</div>
-                    <div class="addrManage-default current"><i class="current"></i>设置为默认地址</div>
+                    <div @click="edit_addr(addr.condigneeId)"><img src="images/bianji.png" alt="">编辑</div>
+                    <div @click="delete_addr(addr.condigneeId)"><img src="images/shangchu.png" alt="">删除</div>
+                    <div @click="set_default_addr(addr.condigneeId)" :class="{current: addr.fist}" class="addrManage-default"><i :class="{current: addr.fist}"></i>设置为默认地址</div>
                 </div>
             </li>
         </ul>
+        <div class="addAddr" @click="add_addr">
+            添加新地址
+        </div>
     </div>
 </section>
+
 </body>
 <script src="lib/init.js"></script>
 <script src="lib/vue.js"></script>
@@ -39,30 +43,95 @@
 <script src="lib/vueComponent.js"></script>
 <script>
     window.addEventListener('load',function () {
-        var baseUrl = localStorage.baseUrl;
+        var baseUrl = localStorage.baseUrl,
+            token = localStorage.token;
         var addr = new Vue({
             el: '#addr',
             data: {
                 show: false,
+                addrList: []
             },
-            created: function () {
-                var self = this;
-                $my.ajax({
-                    url: baseUrl + '/consignee/loadConsignee.do',
-                    data: {
-                        token: localStorage.token
-                    },
-                    method: 'get',
-                    success: function (data) {
-                        var data = JSON.parse(data);
-                        if(data.state){
-                            if(data.data.length){
-                                self.show = true;
-                                console.log(data);
+            computed: {
+                xhr: function () {
+                    var self = this;
+                    return {
+                        url: baseUrl + '/consignee/loadConsignee.do',
+                        data: {
+                            token: localStorage.token
+                        },
+                        method: 'get',
+                        success: function (data) {
+                            var data = JSON.parse(data);
+                            if(data.state){
+                                if(data.data.length){
+                                    self.show = true;
+                                    self.addrList = data.data;
+                                    console.log(data);
+                                }else {
+                                    self.show = false;
+                                }
                             }
                         }
                     }
-                });
+                }
+            },
+            methods: {
+                set_default_addr: function (consigneeId) {
+                    var self = this;
+                    confirm('是否设置为默认收货地址') &&
+                    $my.ajax({
+                        url: baseUrl + '/consignee/fistConsignee.do',
+                        data: {
+                            token: token,
+                            consigneeId: consigneeId
+                        },
+                        method: 'post',
+                        success: function (data) {
+                            console.log(token + '&' + consigneeId);
+                            var data = JSON.parse(data);
+                            if(data.state){
+                                $my.ajax(self.xhr);
+                                alert('设置成功');
+                            }
+                        }
+                    });
+                },
+                delete_addr: function (consigneeId) {
+                    var self = this;
+                    confirm('是否删除该收货地址') &&
+                    $my.ajax({
+                        url: baseUrl + '/consignee/delCondignee.do',
+                        data: {
+                            token: token,
+                            consigneeId: consigneeId
+                        },
+                        method: 'post',
+                        success: function (data) {
+                            var data = JSON.parse(data);
+                            if(data.state){
+                                $my.ajax(self.xhr);
+                                alert('删除成功');
+                            }
+                        }
+                    });
+                },
+                edit_addr: function (consigneeId) {
+                    localStorage.consigneeId = consigneeId; //存储 consigneeId, 告诉editAddr.html是编辑地址
+                    location.href = './editAddr.html';
+                },
+
+                add_addr: function () {
+                    if(localStorage.consigneeId){ //删除 consigneeId, 告诉editAddr.html是新增地址
+                        localStorage.removeItem('consigneeId');
+                    }
+                    location.href = './editAddr.html';
+                },
+
+            },
+            created: function () {
+                var self = this;
+                console.log(this.xhr);
+                $my.ajax(this.xhr);
             }
         });
     });

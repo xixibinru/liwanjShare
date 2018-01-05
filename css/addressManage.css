@@ -1,3 +1,6 @@
+#addr {
+    padding-bottom: 1rem;
+}
 #addr .noAddr {
     padding-top: 4.74rem;
     height: 7.24rem;
@@ -26,13 +29,21 @@
     margin-right: 0.17rem;
 }
 #addr .addrManage {
-    padding-top: 0.3rem ;
     font-size: 0.2rem;
+}
+#addr .addrManage li {
+    padding-top: 0.3rem ;
     background-color: #fff;
+}
+#addr .addrManage li + li {
+    margin-top: 0.12rem;
 }
 #addr .addrManage-user {
     padding: 0 0.38rem;
     color: #0f0f0f;
+}
+#addr .addrManage-user-name > span:nth-of-type(2) {
+    float: right;
 }
 #addr .addrManage-user-addr {
     line-height: 0.8rem;
@@ -49,10 +60,10 @@
     font-size: 0.2rem;
     color: #434343;
     vertical-align: middle;
+    cursor: pointer;
 }
 #addr  .addrManage-edit div + div {
     margin-left: 0.34rem;
-    cursor: pointer;
 }
 #addr  .addrManage-edit div img {
     width: 0.26rem;
@@ -77,4 +88,19 @@
 #addr .addrManage-default i.current {
     border: none;
     background-color: #ec921a;
+}
+#addr .addrManage .addAddr {
+    position: fixed;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    line-height: 0.98rem;
+    color: #fff;
+    background-color: #ec921a;
+    font-size: 0.32rem;
+    text-align: center;
+    border-radius:  0.1rem;
+    cursor: pointer;
+    bottom:0;
+    width: 7.5rem;
 }

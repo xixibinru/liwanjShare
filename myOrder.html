@@ -5,59 +5,147 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>我的订单</title>
     <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/myOrder.css">
 </head>
 <body>
 <header id="header"><a href="">返回</a>我的订单</header>
 <main id="order">
+    <div v-show="show" class="bg">暂无订单</div>
     <nav class="nav clearfix">
-        <div class="current">全部</div>
-        <div >代发货</div>
-        <div>待收货</div>
-        <div>已完成</div>
+        <div @click="status = '全部'" :class="{current: status == '全部'}">全部</div>
+        <div @click="status = '待付款'" :class="{current: status == '待付款'}">待付款</div>
+        <div @click="status = '待发货'" :class="{current: status == '待发货'}">待发货</div>
+        <div @click="status = '待收货2'" :class="{current: status == '待收货2'}">待收货</div>
+        <div @click="status = '已完成'" :class="{current: status == '已完成'}">已完成</div>
     </nav>
     <ul class="orderList">
-        <li>
-            <h3><img src="images/img1.png" alt=""><span>恒都生鲜大超市</span><span class="state">待发货</span></h3>
+        <li v-for="order in orderList">
+            <h3><img :src="order.goods.shopimage" alt=""><span>{{order.goods.shopname}}</span><span class="state">{{order.goods.status}}</span></h3>
             <div class="orderContent">
-                <img src="images/img3.png" alt="">
-                <div class="orderContent-desc">
-                   <h3>首食惠 澳大利亚上脑牛排</h3>
-                   <p>绿色有机，味道鲜美，无添加...</p>
-                   <div>￥29<span>*1</span></div>
-                </div>
-                <div class="orderContent-price"><span>合计：￥29.00</span><span>(含运费￥0.00)</span></div>
+                <a :href="'./orderDetail.html?tradeId='+order.goods.tradeId">
+                    <img :src="order.goods.commodity[0].commodityimage" alt="">
+                    <div  class="orderContent-desc">
+                       <h3>{{order.goods.commodity[0].commodityname}}</h3>
+                       <p>{{order.goods.commodity[0].commodityinfo}}</p>
+                       <div>￥{{order.goods.commodity[0].commodityprice}}<span>*{{order.goods.commodity[0].commoditynum}}</span></div>
+                    </div>
+                </a>
+                <div class="orderContent-price"><span>合计：￥{{order.goods.totalpay}}</span><span>(含运费￥{{order.goods.commodity[0].freight}})</span></div>
                 <div class="orderContent-other">
-                    <div>取消订单</div>
-                    <div class="current">联系商家</div>
-                </div>
-            </div>
-        </li>
-        <li>
-            <h3><img src="images/img1.png" alt=""><span>恒都生鲜大超市</span><span class="state">待发货</span></h3>
-            <div class="orderContent">
-                <img src="images/img3.png" alt="">
-                <div class="orderContent-desc">
-                    <h3>首食惠 澳大利亚上脑牛排</h3>
-                    <p>绿色有机，味道鲜美，无添加...</p>
-                    <div>￥29<span>*1</span></div>
-                </div>
-                <div class="orderContent-price"><span>合计：￥29.00</span><span>(含运费￥0.00)</span></div>
-                <div class="orderContent-other">
-                    <div>取消订单</div>
-                    <div class="current">联系商家</div>
+                    <div @click="delete_order(order.goods.status,order.goods.tradeId)">取消订单</div>
+                    <div class="current"><a :href="'tel:'+order.goods.shoptel">联系商家</a></div>
                 </div>
             </div>
         </li>
     </ul>
-</main>
 
-<footer></footer>
+</main>
 </body>
 <script src="lib/init.js"></script>
 <script src="lib/vue.js"></script>
 <script src="lib/my.js"></script>
 <script src="lib/vueComponent.js"></script>
+<script>
+    window.addEventListener('load',function () {
+        var baseUrl = localStorage.baseUrl,
+            token = localStorage.token;
+        var order = new Vue({
+            el: '#order',
+            data: {
+                show: true,
+                status: '全部',
+                orderList: []
+            },
+            computed: {
+                xhr: function () {
+                    var self = this;
+                    return {
+                        url: baseUrl + '/order/toShowOrder',
+                        data: {
+                            token: token,
+                            status: this.status
+                        },
+                        method: 'post',
+                        success: function (data) {
+                            console.log(self.status);
+                            console.log(token);
+                            var data = JSON.parse(data);
+                            console.log(data);
+                            if(data.state){
+                                console.log(data);
+                                self.orderList = data.data;
+                                console.log(self.orderList);
+                                if(data.data.length){
+                                    self.show = false;
+                                }else {
+                                    self.show = true;
+                                    console.log(self.show);
+                                }
+                            }else {
+                                self.$goLogin();
+                            }
+                        }
+                    }
+                }
+            },
+            watch: {
+                status: function () {
+                    $my.ajax(this.xhr);
+                }
+            },
+            methods: {
+                delete_order: function (status,tradeId) {
+                    var self = this;
+                    var deleteOrder = {
+                        tradeId: tradeId,
+                        token: token
+                    }
+                    switch(status){
+                        case '待发货':
+                            alert('该商品已付款,无法删除');
+                            return;
+                        case '待付款':
+                            console.log('代付款');
+                            $my.ajax({
+                                url: baseUrl + '/order/deleteOrder',
+                                data: deleteOrder,
+                                method: 'post',
+                                success: function (data) {
+                                    var data = JSON.parse(data);
+                                    if(data.state){
+                                        $my.ajax(self.xhr);
+                                        alert('删除成功');
+                                    }else {
+                                        self.$goLogin();
+                                    }
+                                }
+                            });
+                            break;
+                        default:
+                            $my.ajax({
+                                url: baseUrl + '/order/removeOrder',
+                                data: deleteOrder,
+                                method: 'post',
+                                success: function (data) {
+                                    var data = JSON.parse(data);
+                                    if(data.state){
+                                        $my.ajax(self.xhr);
+                                        alert('删除成功');
+                                    }else {
+                                        self.$goLogin();
+                                    }
+                                }
+                            });
+                            break;
+                    }
+                }  
+            },
+            created: function () {
+                $my.ajax(this.xhr);
+            }
+        })
+    })
+</script>
 </html>

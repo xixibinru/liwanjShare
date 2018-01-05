@@ -8,3 +8,6 @@
     font-size: 0.36rem;
     line-height: 100%;
 }
+#footer a {
+    display: block;
+}
