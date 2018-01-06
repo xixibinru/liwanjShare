@@ -146,38 +146,77 @@ window.addEventListener('load',function () {
                     el: '#selectSize',
                     data: {
                         show: false,
-                        commodity_info: {
-                            commodityCode: goodsDetails.commodityCode,
-                            nowPrice: goodsDetails.commodityPrice,
-                            commodityType: goodsDetails.commodityType,
-                        },
-                        commodity: {},
+                        commodityCode: goodsDetails.commodityCode,
+                        nowPrice: goodsDetails.commodityPrice,
+                        commodityType: goodsDetails.commodityType,
+                        commodity: {},//商品信息
                         labelArr:[], //存放选择的label
                         num: 1, //购买数量
+                        have: 0,
                     },
                     methods: {
+                        //选择标签,选择时获取价格
                         selectLabel: function (title,type,index) {
+                            var self = this;
                             this.labelArr[index].title = title;
                             this.labelArr[index].type = type;
-                            console.log(this.labelArr);
-                        },
-                        buyNow: function () {
                             console.log({
                                 token: token,
-                                nowPrice: this.commodity_info.nowPrice,
-                                commodityCode: this.commodity_info.commodityCode,
-                                commodityType: this.commodity_info.commodityType,
+                                commodityCode: this.commodityCode,
+                                label: JSON.stringify(this.labelArr),
+                                nowPrice: this.nowPrice
+                            });
+                            var selected =  this.labelArr.some(function (item) {
+                                return !item.type;
+                            });
+                            console.log(selected);
+                            if(selected) return;
+
+                            $my.ajax({
+                                url: baseUrl + '/shopCart/loadNewCommodityPrice.do',
+                                data: {
+                                    token: token,
+                                    commodityCode: this.commodityCode,
+                                    label: JSON.stringify(this.labelArr),
+                                    nowPrice: this.nowPrice
+                                },
+                                method: 'post',
+                                success: function (data) {
+                                    var data = JSON.parse(data)
+                                    console.log(data);
+                                    if(data.state){
+                                        if(data.data.have){
+                                            self.commodity.nowPrice = data.data.nowPrice;
+                                            self.commodity.stock = data.data.stock;
+                                            self.commodity.commodityCode = data.data.commodityCode;
+                                            self.commodity.commodityType = data.data.commodityType;
+                                        }else {
+                                            self.commodity.nowPrice = '暂无库存';
+                                        }
+                                        self.have = data.data.have;
+                                    }
+                                }
+                            });
+                        },
+                        buyNow: function () {
+                            if(!this.have) return;
+                            console.log({
+                                token: token,
+                                nowPrice: this.commodity.nowPrice,
+                                commodityCode: this.commodityCode,
+                                commodityType: this.commodityType,
                                 num: this.num,
                                 dataList: JSON.stringify(this.labelArr)
                             });
                             // 点击立即购买 => 确定 后 将购买到的商品存到 localStorage
+
                             $my.ajax({
                                 url: baseUrl + '/shopCart/nowBuyAllGoods.do',
                                 data: {
                                     token: token,
-                                    nowPrice: this.commodity_info.nowPrice,
-                                    commodityCode: this.commodity_info.commodityCode,
-                                    commodityType: this.commodity_info.commodityType,
+                                    nowPrice: this.commodity.nowPrice,
+                                    commodityCode: this.commodity.commodityCode || this.commodityCode,
+                                    commodityType: this.commodity.commodityType,
                                     num: this.num,
                                     dataList: JSON.stringify(this.labelArr)
                                 },
@@ -193,16 +232,23 @@ window.addEventListener('load',function () {
                                         Vue.prototype.$goLogin();
                                     }
                                 }
-                            })
+                            });
                         }
                     },
                     created: function () {
                         if(!token) return;
                         var self = this;
-                        console.log(this.commodity_info);
+                        console.log(this.commodityCode+','+
+                            this.commodityPrice+','+
+                            this.commodityType);
+
                         $my.ajax({
                             url: baseUrl + '/shopCart/loadCommodityAddShopCart.do',
-                            data: this.commodity_info,
+                            data: {
+                                commodityCode: this.commodityCode,
+                                nowPrice: this.nowPrice,
+                                commodityType: this.commodityType,
+                            },
                             method: 'post',
                             success: function (data) {
                                 var data = JSON.parse(data);
@@ -214,8 +260,8 @@ window.addEventListener('load',function () {
                                     });
                                     self.labelArr = label.map(function (item,index) {
                                         return {
-                                            title: item.title,
-                                            type: item.type[0]
+                                            title: item.title, //label的标题
+                                            type: null, //label的内容
                                         }
                                     });
                                     console.log(data.data);

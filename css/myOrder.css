@@ -21,7 +21,7 @@
 }
 #order .nav div {
     float: left;
-    width: 20%;
+    width: 25%;
     font-size: 0.28rem;
     color: #8c8c8c;
 }
@@ -110,14 +110,19 @@
     border: 1px solid #ccc;
     color: #ccc;
 }
+#order .orderContent >.orderContent-other > div > a {
+    display: block;
+    color: #ccc;
+}
 #order .orderContent >.orderContent-other > div + div {
     margin-left: 0.22rem;
 }
-#order .orderContent >.orderContent-other > div.current {
+
+#order .orderContent >.orderContent-other > div:last-of-type {
     border: none;
     background-color: #ec921a;
     color: #fff;
 }
-#order .orderContent >.orderContent-other > div.current > a {
+#order .orderContent >.orderContent-other > div:last-of-type > a {
     color: #fff;
 }

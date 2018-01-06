@@ -12,13 +12,94 @@
 <body>
     <header  id="header"><a class="goBack">返回</a>忘记密码</header>
     <main  id="main">
-        <div>手机号<input type="text" value="131****0778"></div>
-        <p>该手机号不是为绑定手机！</p>
+        <div>手机号<input type="text" v-model="name"></div>
+        <div>验证码<input type="text" v-model="code"><div @click="getCode" :class="{disabled: state}" class="getCode">{{SMS_text}}</div></div>
+        <div>新密码<input type="text" v-model="newPwd"></div>
+        <div class="updatePwd" @click="updatePwd">确认</div>
     </main>
-    <footer id="footer">下一步</footer>
+
 </body>
 <script src="lib/init.js"></script>
 <script src="lib/vue.js"></script>
 <script src="lib/my.js"></script>
 <script src="lib/vueComponent.js"></script>
+<script>
+    window.addEventListener('load',function () {
+        var baseUrl = localStorage.baseUrl;
+        var main = new Vue({
+            el: '#main',
+            data: {
+                name: localStorage.name || '',
+                newPwd: '',
+                code: '',
+                state: 0, //0未发送验证码 1已发送
+                SMS_text: '获取验证码',
+                timer: null
+            },
+            watch: {
+                state: function () {
+                    console.log(this.state);
+                    switch(this.state){
+                        case 0:
+                            this.SMS_text = '重新获取验证码';
+                            break;
+                        case 1:
+                            var self = this,
+                                num = 60;
+                            this.timer = setInterval(function () {
+                                num --;
+                                self.SMS_text = '已发送('+num+'s)';
+                                if(num < 0){
+                                    self.state = 0;
+                                    clearInterval(self.timer);
+                                }
+                            },1000);
+                            break;
+                    }
+                }
+            },
+            methods: {
+                getCode: function () {
+                    var self = this;
+                    if(this.state) return;
+                    $my.ajax({
+                        url: baseUrl + '/user/sendSMS.do',
+                        data: {
+                            name: this.name
+                        },
+                        method: 'post',
+                        success: function (data) {
+                            var data = JSON.parse(data);
+                            console.log(data);
+                            if(data.state && data.data.length < 7){
+                                self.state = 1;
+                                console.log(self.state);
+                            }else {
+                                alert(data.data);
+                            }
+                        }
+                    });
+                },
+                updatePwd: function () {
+                    $my.ajax({
+                        url: baseUrl + '/user/forgetPwd.do',
+                        data: {
+                            name: this.name,
+                            newPwd: this.newPwd,
+                            code: this.code
+                        },
+                        method: 'post',
+                        success: function (data) {
+                            var data = JSON.parse(data);
+                            if(data.state){
+                                location.href = './success.html?title=密码修改&content=修改成功';
+                                console.log(data);
+                            }
+                        }
+                    });
+                }
+            }
+        });
+    });
+</script>
 </html>

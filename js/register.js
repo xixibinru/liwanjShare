@@ -64,7 +64,7 @@ window.addEventListener('load',function () {
                               alert(data.data)
                           }
                       }
-                  })
+                  });
             },
             countdown: function () {
                 var self = this,
@@ -99,7 +99,7 @@ window.addEventListener('load',function () {
                         localStorage.password = self.userData.password;
                         localStorage.address = data.data.address;
                         localStorage.isRegister = 1; // 是否已注册  0未注册 1已注册
-                        location.href = './login.html';
+                        location.href = './success.html?title=注册&content=注册成功';
                     }
                 })
             }

@@ -33,7 +33,7 @@
             <!--<p>店 铺 优 惠<span>-￥{{order.discounts}}</span></p>-->
             <p>应 付<span>￥{{totalPrice}}</span></p>
         </div>
-        <div class="commodity-mark"><input type="text" placeholder="订单备注（30字内）"></div>
+        <div class="commodity-mark"><input type="text" v-model="payInfo" placeholder="订单备注（30字内）"></div>
         <div class="commodity-total">共<span>{{order.sum}}</span>件商品,小计: ￥{{totalPrice}}<span></span></div>
     </div>
     <footer class="goPay">
@@ -71,12 +71,20 @@
         var order = new Vue({
             el: '#order',
             data: {
-                order: confirmAnOrder
+                order: confirmAnOrder,
+                payInfo: '',
             },
             computed: {
                 totalPrice: function () {
-                    return this.order.sumPrice + this.order.freight - this.order.discounts;
+                    return this.order.sumPrice + this.order.freight;
                 }
+            },
+            watch: {
+                payInfo: function () {
+                    if(this.payInfo.length > 30){
+                        this.payInfo =  this.payInfo.substring(0,30);
+                    }
+                }  
             },
             methods: {
                 go_pay: function () {
@@ -100,19 +108,24 @@
             },
             methods: {
                 pay: function () {
+                    var data = {
+                        tradeId: this.order.orderIds,
+                        consigneeId: this.order.address.consigneeId,
+                        token: token,
+                        payInfo: order.payInfo
+                    };
                     if(!this.type){ //支付宝
                         $my.ajax({
-                            url: baseUrl + '/alipay/appPay',
-                            data: {
-                                tradeId: this.order.orderIds,
-                            },
+                            url: baseUrl + '/alipay/wapPay',
+                            data: data,
                             method: 'post',
                             success: function (data) {
                                 console.log(data);
                             }
-                        })
+                        });
+                        location.href = baseUrl + '/alipay/wapPay?' + this.$objToSearch(data);
                     }else { //微信
-
+                        location.href = baseUrl + '/wxpay/wapPay?' + this.$objToSearch(data);
                     }
                 }
             },

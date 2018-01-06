@@ -574,12 +574,16 @@ body {
     margin-top: -0.03rem;
     height: 0.26rem;
 }
+
 #selectSize .selectSize-buy {
     line-height: 1.15rem;
-    color: #fff;
-    background-color: #ec921a;
+    background-color: #e3e3e3;
     text-align: center;
     font-size: 0.38rem;
+}
+#selectSize .selectSize-buy.have {
+    background-color: #ec921a;
+    color: #fff;
 }
 
 

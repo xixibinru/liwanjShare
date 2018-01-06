@@ -10,18 +10,17 @@
     <link rel="stylesheet" href="css/myOrder.css">
 </head>
 <body>
-<header id="header"><a href="">返回</a>我的订单</header>
+<header id="header"><a class="goBack">返回</a>我的订单</header>
 <main id="order">
     <div v-show="show" class="bg">暂无订单</div>
     <nav class="nav clearfix">
         <div @click="status = '全部'" :class="{current: status == '全部'}">全部</div>
-        <div @click="status = '待付款'" :class="{current: status == '待付款'}">待付款</div>
         <div @click="status = '待发货'" :class="{current: status == '待发货'}">待发货</div>
         <div @click="status = '待收货2'" :class="{current: status == '待收货2'}">待收货</div>
         <div @click="status = '已完成'" :class="{current: status == '已完成'}">已完成</div>
     </nav>
     <ul class="orderList">
-        <li v-for="order in orderList">
+        <li v-if="order.goods.status !== '待付款'" v-for="order in orderList">
             <h3><img :src="order.goods.shopimage" alt=""><span>{{order.goods.shopname}}</span><span class="state">{{order.goods.status}}</span></h3>
             <div class="orderContent">
                 <a :href="'./orderDetail.html?tradeId='+order.goods.tradeId">
@@ -29,13 +28,14 @@
                     <div  class="orderContent-desc">
                        <h3>{{order.goods.commodity[0].commodityname}}</h3>
                        <p>{{order.goods.commodity[0].commodityinfo}}</p>
-                       <div>￥{{order.goods.commodity[0].commodityprice}}<span>*{{order.goods.commodity[0].commoditynum}}</span></div>
+                       <div>￥{{order.goods.commodity[0].commodityprice}}<span>*{{order.goods.commodity[0].commodityNum}}</span></div>
                     </div>
                 </a>
                 <div class="orderContent-price"><span>合计：￥{{order.goods.totalpay}}</span><span>(含运费￥{{order.goods.commodity[0].freight}})</span></div>
                 <div class="orderContent-other">
-                    <div @click="delete_order(order.goods.status,order.goods.tradeId)">取消订单</div>
-                    <div class="current"><a :href="'tel:'+order.goods.shoptel">联系商家</a></div>
+                    <div v-if="order.goods.status == '已完成'" @click="$delete_order(order.goods.status,order.goods.tradeId)">取消订单</div>
+                    <div v-if="order.goods.status == '待收货'" @click="$take_delivery(order.goods.tradeId)">确认收货</div>
+                    <div v-if="order.goods.status == '待收货' || order.goods.status == '待发货'" class="current"><a :href="'tel:'+order.goods.shoptel">联系商家</a></div>
                 </div>
             </div>
         </li>
@@ -95,53 +95,53 @@
                     $my.ajax(this.xhr);
                 }
             },
-            methods: {
-                delete_order: function (status,tradeId) {
-                    var self = this;
-                    var deleteOrder = {
-                        tradeId: tradeId,
-                        token: token
-                    }
-                    switch(status){
-                        case '待发货':
-                            alert('该商品已付款,无法删除');
-                            return;
-                        case '待付款':
-                            console.log('代付款');
-                            $my.ajax({
-                                url: baseUrl + '/order/deleteOrder',
-                                data: deleteOrder,
-                                method: 'post',
-                                success: function (data) {
-                                    var data = JSON.parse(data);
-                                    if(data.state){
-                                        $my.ajax(self.xhr);
-                                        alert('删除成功');
-                                    }else {
-                                        self.$goLogin();
-                                    }
-                                }
-                            });
-                            break;
-                        default:
-                            $my.ajax({
-                                url: baseUrl + '/order/removeOrder',
-                                data: deleteOrder,
-                                method: 'post',
-                                success: function (data) {
-                                    var data = JSON.parse(data);
-                                    if(data.state){
-                                        $my.ajax(self.xhr);
-                                        alert('删除成功');
-                                    }else {
-                                        self.$goLogin();
-                                    }
-                                }
-                            });
-                            break;
-                    }
-                }  
-            },
+//            methods: {
+//                delete_order: function (status,tradeId) {
+//                    var self = this;
+//                    var deleteOrder = {
+//                        tradeId: tradeId,
+//                        token: token
+//                    }
+//                    switch(status){
+//                        case '待发货':
+//                            alert('该商品已付款,无法删除');
+//                            return;
+//                        case '待付款':
+//                            console.log('代付款');
+//                            $my.ajax({
+//                                url: baseUrl + '/order/deleteOrder',
+//                                data: deleteOrder,
+//                                method: 'post',
+//                                success: function (data) {
+//                                    var data = JSON.parse(data);
+//                                    if(data.state){
+//                                        $my.ajax(self.xhr);
+//                                        alert('删除成功');
+//                                    }else {
+//                                        self.$goLogin();
+//                                    }
+//                                }
+//                            });
+//                            break;
+//                        default:
+//                            $my.ajax({
+//                                url: baseUrl + '/order/removeOrder',
+//                                data: deleteOrder,
+//                                method: 'post',
+//                                success: function (data) {
+//                                    var data = JSON.parse(data);
+//                                    if(data.state){
+//                                        $my.ajax(self.xhr);
+//                                        alert('删除成功');
+//                                    }else {
+//                                        self.$goLogin();
+//                                    }
+//                                }
+//                            });
+//                            break;
+//                    }
+//                }
+//            },
             created: function () {
                 $my.ajax(this.xhr);
             }

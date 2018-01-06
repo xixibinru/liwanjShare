@@ -136,11 +136,12 @@
 
 #order .commodity-Info-spec {
     line-height: 0.5rem;
+    height: 0.5rem;
     color: #a3a3a3;
 }
 
 #order .commodity-Info-price {
-    padding-top: 0.15rem;
+    padding: 0.15rem 0;
     line-height: 0.6rem;
     color: #ff0202;
     font-size: 0.2rem;
@@ -202,6 +203,7 @@
     text-align: right;
     line-height: 0.85rem;
     background-color: #f2f2f2;
+    padding: 0 0.33rem;
 }
 #order .commodity-other div {
     display: inline-block;
@@ -210,14 +212,18 @@
     height: 0.62rem;
     line-height: 0.6rem;
     border-radius: 0.1rem;
- 
     vertical-align: middle;
-}
-#order .commodity-other div:nth-of-type(1){
     border: 1px solid #c2c2c2;
     color: #b2b2b2;
 }
-#order .commodity-other div:nth-of-type(2){
+#order .commodity-other div > a {
+    color: #b2b2b2;
+    display: block;
+}
+#order .commodity-other div:last-of-type {
     border: 1px solid #ec921a;
+    color: #ec921a;
+}
+#order .commodity-other div:last-of-type > a {
     color: #ec921a;
 }

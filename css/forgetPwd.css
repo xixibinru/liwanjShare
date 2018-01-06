@@ -2,8 +2,8 @@
     position: relative;
     margin-top: 0.3rem;
 }
-#main div {
-
+#main > div {
+    position: relative;
     height: 0.9rem;
     padding-left: 0.3rem;
     font-size: 0.24rem;
@@ -11,12 +11,28 @@
     background-color: #fff;
     line-height: 0.9rem;
 }
-#main div input {
+#main > div + div {
+    margin-top: 0.12rem;
+}
+#main > div input {
     vertical-align: top;
     line-height: 0.9rem;
     font-size: 0.24rem;
     padding-left: 0.6rem;
     width: 80%;
+}
+#main > div .getCode {
+    position: absolute;
+    right: 0;
+    top: 0;
+    line-height: 0.9rem;
+    width: 2.2rem;
+    text-align: center;
+    color: #fff;
+    background-color: #ec921a;
+}
+#main > div .getCode.disabled {
+    background-color: #ddd;
 }
 #main p {
     position: absolute;
@@ -26,6 +42,15 @@
     color: #fc1212;
     line-height: 100%;
 }
-#footer {
+#main .updatePwd {
+    margin: 0 auto;
     margin-top: 1.53rem;
+    width: 5.5rem;
+    height: 0.98rem;
+    line-height: 0.98rem;
+    border-radius: 0.1rem;
+    background-color: #ec921a;
+    font-size: 0.32rem;
+    text-align: center;
+    color: #fff;
 }

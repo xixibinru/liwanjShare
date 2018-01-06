@@ -70,4 +70,23 @@
 <script src="lib/vue.js"></script>
 <script src="lib/my.js"></script>
 <script src="lib/vueComponent.js"></script>
+<script>
+    window.addEventListener('load',function () {
+        var token = localStorage.token,
+            baseUrl = localStorage.baseUrl,
+            tradeId = Vue.prototype.$getSearch().tradeId
+        var logistics = new Vue({
+            el: '#logistics',
+            data: {
+                
+            },
+            created: function () {
+                $my.ajax({
+                    url: baseUrl + '/express/loadExpress.do',
+
+                })
+            }
+        });
+    });
+</script>
 </html>

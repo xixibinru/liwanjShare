@@ -159,12 +159,14 @@
     width: 4.6rem;
     background-color: #fff;
     color: #ff0202;
+    vertical-align: top;
 }
 #order .goPay .price-goPay {
     width: 2.9rem;
     background-color: #ec921a;
     color: #fff;
     text-align: center;
+    vertical-align: top;
 }
 
 

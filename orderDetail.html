@@ -10,13 +10,13 @@
     <link rel="stylesheet" href="css/orderDetail.css">
 </head>
 <body>
-<header  id="header"><a href="">返回</a>订单详情</header>
+<header  id="header"><a class="goBack">返回</a>订单详情</header>
 
 <section v-if="order" id="order">
     <div class="orderState">
         <p>{{order.status}}</p>
-        <!--<p>等待商家发货中</p>-->
-        <img :class="{daifahuo:order.status=='待发货',yifahuo:order.status=='待收货'}" :src="order.status=='待发货'? 'images/daifahuo.png': 'images/yifahuo.png'" alt="">
+        <p>{{getStatusTxt(order.status)}}</p>
+        <img v-if="order.status == '待发货' || order.status =='待收货'" :class="{daifahuo:order.status=='待发货',yifahuo:order.status=='待收货'}" :src="order.status=='待发货'? 'images/daifahuo.png': 'images/yifahuo.png'" alt="">
     </div>
     <div class="userInfo">
         <h3>收货地址</h3>
@@ -29,27 +29,30 @@
         <div class="commodity-Info">
             <img :src="order.commodity[0].commodityimage" alt="">
             <div>
-                <p class="commodity-Info-name">{{order.commodity[0].commodityname}}</p>
-                <p class="commodity-Info-spec">{{order.commodity[0].commodityinfo}}</p>
+                <p class="commodity-Info-name"> {{order.commodity[0].commodityname}}</p>
+                <p class="commodity-Info-spec"> {{order.commodity[0].commodityinfo}}</p>
                 <p class="commodity-Info-price">￥<strong>{{order.commodity[0].commodityprice}}</strong><span>*{{order.commodity[0].commodityNum}}</span></p>
             </div>
         </div>
         <div class="commodity-price">
             <p>订单编号:<span>{{order.tradeId}}</span></p>
             <p>下单时间:<span>{{$formatDate(order.orderTime)}}</span></p>
-            <p v-if="logistics">配送方式:<span>{{logistics.company}}</span></p>
+            <p v-if="logistics && logistics.company">配送方式:<span>{{logistics.company}}</span></p>
             <!--<p>配送日期:<span>2017-10-10</span></p>-->
-            <p>买家留言:<span>{{order.payInfo}}</span></p>
+            <p>支付方式:<span>{{order.payWay}}</span></p>
+            <p>买家留言:<span>{{order.payInfo || '无'}}</span></p>
         </div>
         <div class="commodity-total">
-            <p>商品总额 <span>￥{{order.commodity[0].commodityprice * order.commodity[0].commodityNum}}</span></p>
+            <p>商品总额 <span>￥{{sumPrice}}</span></p>
             <p>运费 <span>￥{{order.commodity[0].freight}}</span></p>
             <!--<p>店铺优惠 <span class="red">-￥5.00</span></p>-->
-            <p class="last clearfix"><span>需付款: </span><span> ￥{{}}</span></p>
+            <p class="last clearfix"><span>需付款: </span><span>￥{{order.totalpay}}</span></p>
         </div>
         <div class="commodity-other">
-            <div>取消订单</div>
-            <div>联系商家</div>
+            <div v-if="order.status == '已完成'" :class="{current:changeColor == '取消订单'}" @click="$delete_order(order.status,order.tradeId)">取消订单</div>
+            <div v-if="order.status == '待收货' || order.status == '待发货'" :class="{current:changeColor == '联系商家'}"><a :href="'tel:'+order.shoptel">联系商家</a></div>
+            <div v-if="order.status == '待收货'" :class="{current:changeColor == '查看物流'}"><a :href="'./checkTheLogistics.html?tradeId='+order.tradeId">查看物流</a></div>
+            <div v-if="order.status == '待收货'" @click="$take_delivery(order.tradeId)" :class="{current:changeColor == '确认收货'}">确认收货</div>
         </div>
     </div>
 </section>
@@ -66,7 +69,35 @@
             el: '#order',
             data: {
                 order: null, //订单详情
-                logistics: null //物流详情
+                logistics: null, //物流详情
+                changeColor: '', //底部样式 当前选中添加黄边框样式
+            },
+            computed: {
+                //商品总额
+                sumPrice: function () {
+                    return this.order.commodity[0].commodityprice * this.order.commodity[0].commodityNum
+                },
+                //需付款
+                totalPrice: function () {
+                    return this.sumPrice + this.order.commodity[0].freight
+                }
+            },
+            methods: {
+                //发货状态说明
+                getStatusTxt: function (status) {
+                    switch(status){
+                        case '待付款':
+                            return '该订单还未付款哦';
+                        case '待发货':
+                            return '等待商家发货中...';
+                        case '待收货':
+                            return '商品正在运输中...';
+                        case '已完成':
+                            return '订单已完成';
+                        default:
+                            return '';
+                    }
+                },
             },
             created: function () {
                 var tradeId = Vue.prototype.$getSearch().tradeId,
@@ -82,11 +113,15 @@
                     method: 'get',
                     success: function (data) {
                         var data = JSON.parse(data);
-                        console.log(data);
-                        self.order = data.data;
+                        if(data.state){
+                            console.log(data);
+                            self.order = data.data;
+                        }else {
+                            Vue.prototype.$goLogin();
+                        }
                     }
                 });
-//                 获取物流信息
+//                 获取物流信息 这个接口不是查看物流 仅用于显示配送方式。。
                 $my.ajax({
                     url: baseUrl + '/order/orderLogistics',
                     data: {
