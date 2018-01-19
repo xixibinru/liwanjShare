@@ -60,7 +60,11 @@
                                      localStorage.name = login.name;
                                      localStorage.password = login.password;
                                      localStorage.token = data.data;
+                                     localStorage.isRegister = 1;
                                      location.href = localStorage.share2Url;
+                                     break;
+                                 case 2:
+                                     alert('该账号不存在');
                                      break;
                                  case 3:
                                      alert(data.message);

@@ -26,7 +26,7 @@
                 <div class="addrManage-edit">
                     <div @click="edit_addr(addr.condigneeId)"><img src="images/bianji.png" alt="">编辑</div>
                     <div @click="delete_addr(addr.condigneeId)"><img src="images/shangchu.png" alt="">删除</div>
-                    <div @click="set_default_addr(addr.condigneeId)" :class="{current: addr.fist}" class="addrManage-default"><i :class="{current: addr.fist}"></i>设置为默认地址</div>
+                    <div @click="set_default_addr(addr.condigneeId,addr.fist)" :class="{current: addr.fist}" class="addrManage-default"><i :class="{current: addr.fist}"></i>设置为默认地址</div>
                 </div>
             </li>
         </ul>
@@ -76,8 +76,9 @@
                 }
             },
             methods: {
-                set_default_addr: function (consigneeId) {
+                set_default_addr: function (consigneeId,fist) {
                     var self = this;
+                    if(fist) return;
                     confirm('是否设置为默认收货地址') &&
                     $my.ajax({
                         url: baseUrl + '/consignee/fistConsignee.do',

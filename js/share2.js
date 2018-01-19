@@ -147,7 +147,7 @@ window.addEventListener('load',function () {
                     data: {
                         show: false,
                         commodityCode: goodsDetails.commodityCode,
-                        nowPrice: goodsDetails.commodityPrice,
+                        nowPrice: goodsDetails.nowPrice,
                         commodityType: goodsDetails.commodityType,
                         commodity: {},//商品信息
                         labelArr:[], //存放选择的label
@@ -226,6 +226,7 @@ window.addEventListener('load',function () {
                                     console.log(this.data);
                                     console.log(data);
                                     if(data.state){
+                                        console.log(data.data);
                                         localStorage.confirmAnOrder = JSON.stringify(data.data);
                                         location.href = './confirmAnOrder.html';
                                     }else {
@@ -236,12 +237,8 @@ window.addEventListener('load',function () {
                         }
                     },
                     created: function () {
-                        if(!token) return;
+                        if(!token || this.commodityType == '超市') return;
                         var self = this;
-                        console.log(this.commodityCode+','+
-                            this.commodityPrice+','+
-                            this.commodityType);
-
                         $my.ajax({
                             url: baseUrl + '/shopCart/loadCommodityAddShopCart.do',
                             data: {
@@ -251,21 +248,28 @@ window.addEventListener('load',function () {
                             },
                             method: 'post',
                             success: function (data) {
+                                console.log(this.data);
                                 var data = JSON.parse(data);
                                 console.log(data);
                                 if(data.state){
                                     var  label = data.data.lable; //用于填充label数组
-                                    label.forEach(function (item,index,arr) {
-                                        arr[index].type = item.type.split(';');
-                                    });
-                                    self.labelArr = label.map(function (item,index) {
-                                        return {
-                                            title: item.title, //label的标题
-                                            type: null, //label的内容
-                                        }
-                                    });
-                                    console.log(data.data);
                                     self.commodity = data.data;
+                                    if(label.length){
+                                        label.forEach(function (item,index,arr) {
+                                            arr[index].type = item.type.split(';');
+                                        });
+                                        self.labelArr = label.map(function (item,index) {
+                                            return {
+                                                title: item.title, //label的标题
+                                                type: null, //label的内容
+                                            }
+                                        });
+                                    }else {
+                                        self.have = 1;
+                                    }
+
+                                    console.log(data.data);
+
                                 }else {
                                     Vue.prototype.$goLogin();
                                 }
@@ -282,9 +286,11 @@ window.addEventListener('load',function () {
                         downUrl: function () {
                             switch(this.ua){
                                 case 'ios':
-                                    return '';
+                                    return 'https://itunes.apple.com/app/id1327660974?mt=8';
                                 case 'android':
                                     return 'http://a.app.qq.com/o/simple.jsp?pkgname=com.lwj.liwanjia';
+                                default:
+                                    return '';
                             }
                         },
                         userName: function () {
@@ -302,6 +308,7 @@ window.addEventListener('load',function () {
                     },
                     methods: {
                         download: function () {
+                            console.log(this.downUrl);
                             var isdown = confirm('是否立即下载app');
                             if(isdown){
                                 if(!this.downUrl){
@@ -329,7 +336,8 @@ window.addEventListener('load',function () {
                                     break;
                                 case '立即购买':
                                     if(goodsDetails.commodityType == '超市'){
-
+                                        //超市类型还没有
+                                        alert('该商品类型为超市,暂时无法购买');
                                     }else {
                                         selectSize.show = true;
                                     }
@@ -339,6 +347,7 @@ window.addEventListener('load',function () {
                     },
                     created: function () {
                         var ua = navigator.userAgent.toLowerCase();
+                       
                         if (/iphone|ipad|ipod/.test(ua)) {
                             this.ua = 'ios';
                         } else if (/android/.test(ua)) {
@@ -346,6 +355,7 @@ window.addEventListener('load',function () {
                         } else {
                             this.ua = 'pc';
                         }
+                        console.log(this.ua);
                     }
                 });
             }

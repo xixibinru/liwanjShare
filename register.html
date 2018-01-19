@@ -15,7 +15,7 @@
         <h3>地址填写</h3>
         <module-address3 @give_address3="$get_address3($event,'userData')"></module-address3>
         <div><input v-model="userData.fourAddress" type="text" placeholder="请输入详细地址"></div>
-        <div><input v-model="userData.referrerName" type="text" placeholder="请输入邀请码"></div>
+        <div><input v-model="userData.referrerName" type="text" placeholder="请输入邀请码(可不填)"></div>
         <div><input v-model="userData.name" type="text" placeholder="请输入手机号"></div>
         <div><input v-model="userVcode" type="text" style="width: 3.6rem;" placeholder="输入校验码"><module-vcode @give_vcode="$get_vcode($event)" :width="'2.55rem'" :height="'0.82rem'"></module-vcode></div>
         <div><input v-model="userData.code" type="text" style="width: 4.6rem;" placeholder="短信验证码"><div @click="sendSMS" class="send-code" :class="classObj">{{txt}}</div></div>

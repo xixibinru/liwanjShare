@@ -11,7 +11,7 @@
 </head>
 <body>
 <header id="header"><a class="goBack">返回</a>我的订单</header>
-<main id="order">
+<main v-cloak id="order">
     <div v-show="show" class="bg">暂无订单</div>
     <nav class="nav clearfix">
         <div @click="status = '全部'" :class="{current: status == '全部'}">全部</div>

@@ -11,7 +11,7 @@
 </head>
 <body>
 <header  id="header"><a class="goBack">返回</a>确认订单</header>
-<section id="order">
+<section v-cloak id="order">
     <div class="userInfo">
         <p><span>{{order.address.name}}</span><span>{{order.address.phone}}</span></p>
         <p>{{order.address.address}}</p>
@@ -29,7 +29,7 @@
         </div>
         <div class="commodity-price">
             <p>商 品 总 价<span>￥{{order.sumPrice}}</span></p>
-            <p>配 送 费<span>￥{{order.freight}}</span></p>
+            <p>配 送 费<span>￥0</span></p>
             <!--<p>店 铺 优 惠<span>-￥{{order.discounts}}</span></p>-->
             <p>应 付<span>￥{{totalPrice}}</span></p>
         </div>
@@ -76,7 +76,7 @@
             },
             computed: {
                 totalPrice: function () {
-                    return this.order.sumPrice + this.order.freight;
+                    return this.order.sumPrice;
                 }
             },
             watch: {
@@ -115,17 +115,17 @@
                         payInfo: order.payInfo
                     };
                     if(!this.type){ //支付宝
+                        location.href = baseUrl + '/alipay/wapPay?' + this.$objToSearch(data);
+                    }else { //微信
                         $my.ajax({
-                            url: baseUrl + '/alipay/wapPay',
+                            url: baseUrl + '/wxpay/wxPayUrl?',
                             data: data,
                             method: 'post',
                             success: function (data) {
                                 console.log(data);
+                                location.href = data;
                             }
                         });
-                        location.href = baseUrl + '/alipay/wapPay?' + this.$objToSearch(data);
-                    }else { //微信
-                        location.href = baseUrl + '/wxpay/wapPay?' + this.$objToSearch(data);
                     }
                 }
             },

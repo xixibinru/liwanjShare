@@ -78,7 +78,7 @@ body {
 #commodity .title h3 {
     width: 5.2rem;
     font-size: 0.3rem;
-    /*line-height:0.46rem;*/
+    line-height:0.46rem;
     color: #181818;
     float: left;
 }
@@ -86,10 +86,8 @@ body {
 #commodity .title .enterShop {
     float: right;
     width: 1.4rem;
-    height: 0.46rem;
     line-height: 0.46rem;
     background-color: #ec921a;
-    vertical-align: middle;
     font-size: 0.28rem;
     color: #fff;
     border-radius: 0.04rem;
@@ -353,7 +351,7 @@ body {
 }
 
 #same {
-    padding: 0 0.15rem 1.16rem 0.15rem;
+    padding: 0 0.15rem 1.33rem 0.15rem;
     background-color: #fff;
 }
 
@@ -412,7 +410,7 @@ body {
     height: 0.88rem;
     font-size: 0.26rem;
     color: #0b0a09;
-    line-height: 0.44rem;
+    line-height: 0.34rem;
     padding: 0.14rem 0.2rem 0.04rem 0.2rem;
     overflow: hidden;
     text-overflow: ellipsis;

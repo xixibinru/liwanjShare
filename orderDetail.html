@@ -12,7 +12,7 @@
 <body>
 <header  id="header"><a class="goBack">返回</a>订单详情</header>
 
-<section v-if="order" id="order">
+<section v-cloak v-if="order" id="order">
     <div class="orderState">
         <p>{{order.status}}</p>
         <p>{{getStatusTxt(order.status)}}</p>
