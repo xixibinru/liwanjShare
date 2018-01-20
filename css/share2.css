@@ -59,7 +59,8 @@ body {
 }
 
 #header {
-    height: 5rem;
+    height: 7.5rem;
+    background-color: transparent;
 }
 
 #header li img {

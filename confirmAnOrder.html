@@ -31,13 +31,13 @@
             <p>商 品 总 价<span>￥{{order.sumPrice}}</span></p>
             <p>配 送 费<span>￥0</span></p>
             <!--<p>店 铺 优 惠<span>-￥{{order.discounts}}</span></p>-->
-            <p>应 付<span>￥{{totalPrice}}</span></p>
+            <p>应 付<span>￥{{order.sumPrice}}</span></p>
         </div>
         <div class="commodity-mark"><input type="text" v-model="payInfo" placeholder="订单备注（30字内）"></div>
-        <div class="commodity-total">共<span>{{order.sum}}</span>件商品,小计: ￥{{totalPrice}}<span></span></div>
+        <div class="commodity-total">共<span>{{order.sum}}</span>件商品,小计: ￥{{order.sumPrice}}<span></span></div>
     </div>
     <footer class="goPay">
-        <div class="price-price">应付金额 <span>￥{{totalPrice}}</span></div>
+        <div class="price-price">应付金额 <span>￥{{order.sumPrice}}</span></div>
         <div @click="go_pay" class="price-goPay">去付款</div>
     </footer>
 </section>
@@ -45,7 +45,7 @@
     <div class="content">
         <h3>付款详情 <img src="images/delete.png" @click="show = false" alt=""></h3>
         <p>需支付金额</p>
-        <p>{{price}}元</p>
+        <p>{{order.sumPrice}}元</p>
         <ul>
             <li @click="type = 0">
                 <img src="images/zhifubao.png" alt="">支付宝<i :class="{current: !type}"></i>
@@ -65,19 +65,16 @@
 <script>
 
     window.addEventListener('load',function () {
+        
         var token = localStorage.token,
             baseUrl = localStorage.baseUrl,
+            wechat_code = Vue.prototype.$getSearch().code, //微信code
             confirmAnOrder = JSON.parse(localStorage.confirmAnOrder);
         var order = new Vue({
             el: '#order',
             data: {
                 order: confirmAnOrder,
                 payInfo: '',
-            },
-            computed: {
-                totalPrice: function () {
-                    return this.order.sumPrice;
-                }
             },
             watch: {
                 payInfo: function () {
@@ -102,27 +99,43 @@
                 show: false,
                 type: 0,
                 price: 0,
-                pay_data: {
-
+            },
+            computed: {
+                xhr: function(){
+                    return {
+                        tradeId: this.order.orderIds,
+                        consigneeId: this.order.address.consigneeId,
+                        token: token,
+                        payInfo: order.payInfo,
+                        code: wechat_code
+                        // commodityCode: this.order.shopInfo[0].goods[0].commodityCode,
+                        // commodityType: this.order.shopInfo[0].goods[0].commodityType
+                    }
                 }
             },
             methods: {
                 pay: function () {
-                    var data = {
-                        tradeId: this.order.orderIds,
-                        consigneeId: this.order.address.consigneeId,
-                        token: token,
-                        payInfo: order.payInfo
-                    };
+                    // var commodity = JSON.parse(localStorage.confirmAnOrder),
+                    // commodityCode = commodity.shopInfo[0].goods[0].commodityCode,
+                    // commodityType = commodity.shopInfo[0].goods[0].commodityType;
+                    // var data = {
+                    //     tradeId: this.order.orderIds,
+                    //     consigneeId: this.order.address.consigneeId,
+                    //     token: token,
+                    //     payInfo: order.payInfo,
+                    //     commodityCode: commodityCode,
+                    //     commodityType: commodityType
+                    // }
                     if(!this.type){ //支付宝
-                        location.href = baseUrl + '/alipay/wapPay?' + this.$objToSearch(data);
+                        location.href = baseUrl + '/alipay/wapPay?' + this.$objToSearch(this.xhr);
                     }else { //微信
                         $my.ajax({
                             url: baseUrl + '/wxpay/wxPayUrl?',
-                            data: data,
+                            data: {
+                                redirect_uri: 'http://www.liwanj.com/share/confirmAnOrder.html'
+                            },
                             method: 'post',
                             success: function (data) {
-                                console.log(data);
                                 location.href = data;
                             }
                         });
@@ -130,7 +143,54 @@
                 }
             },
             created: function () {
-                this.price = order.totalPrice;
+                if(wechat_code){
+                    $my.ajax({
+                            url: baseUrl + '/wxpay/wapPay?',
+                            data: this.xhr,
+                            method: 'post',
+                            success: function (data) {
+                                var data = JSON.parse(data);
+                                function onBridgeReady(){
+                                WeixinJSBridge.invoke(
+                                    'getBrandWCPayRequest', {
+                                        "appId":data.appId,     //公众号名称，由商户传入     
+                                        "timeStamp":data.timeStamp,         //时间戳，自1970年以来的秒数     
+                                        "nonceStr":data.nonceStr, //随机串     
+                                        "package":data.package,     
+                                        "signType":"MD5",         //微信签名方式：     
+                                        "paySign":data.paySign //微信签名 
+                                    },
+                                    function(res){     
+                                        if(res.err_msg == "get_brand_wcpay_request:ok" ) {
+                                            alert("交易成功");
+                                            location.href = 'http://www.liwanj.com/share/myOrder.html'
+                                            // window.location.href="${base}/test/paySuccess";
+                                        }
+                                        if (res.err_msg == "get_brand_wcpay_request:cancel") {  
+                                            alert("交易取消");  
+                                            // window.location.href="${base}/test/cancel";
+                                        }  
+                                        if (res.err_msg == "get_brand_wcpay_request:fail") {  
+                                            alert("支付失败"); 
+                                            // window.location.href="${base}/test/fail";
+                                        }      // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。 
+                                    }
+                                ); 
+                                }
+                                if (typeof WeixinJSBridge == "undefined"){
+                                if( document.addEventListener ){
+                                    document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+                                }else if (document.attachEvent){
+                                    document.attachEvent('WeixinJSBridgeReady', onBridgeReady); 
+                                    document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+                                }
+                                }else{
+                                    onBridgeReady();
+                                }
+                            }
+                        });
+                }
+                console.log(order);
             }
         });
     });

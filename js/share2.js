@@ -1,62 +1,33 @@
-
 window.addEventListener('load',function () {
     localStorage.share2Url = location.href;
-    function getUrl() {
-        if(location.origin){
-            return location.origin;
-        }else{
-            var protocol = location.protocol,
-                host = location.host;
-            return protocol + host;
-        }
-    }
-    var baseUrl = getUrl();
+    var baseUrl = Vue.prototype.$getBaseUrl();
     localStorage.baseUrl = baseUrl;
-    function getRequest(){
-        var url = location.search;
-        var jsonList = {};
-        if(url.indexOf('?') != -1){
-            var str = url.slice(url.indexOf("?") + 1);
-            var strs = str.split("&");
-            for(var i = 0; i < strs.length; i++){
-                jsonList[strs[i].split("=")[0]] = strs[i].split("=")[1];
-            }
-        }
-        return jsonList;
-    }
-    var requestData = getRequest();
-    requestData.commodityType = requestData.commodityType == 1? '商品': '超市';
-
-    // $my.ajax({
-    //     url: baseUrl + '/user/getToken.do',
-    //     data: {
-    //         userId: requestData.userId
-    //     },
-    //     method: 'get',
-    //     success: function (data) {
-    //         var data = JSON.parse(data),
-    //             token = data.data;
-    //         if(data.state){
-    //             // document.cookie = 'token=' + token;
-    //
+    // function getRequest(){
+    //     var url = location.search;
+    //     var jsonList = {};
+    //     if(url.indexOf('?') != -1){
+    //         var str = url.slice(url.indexOf("?") + 1);
+    //         var strs = str.split("&");
+    //         for(var i = 0; i < strs.length; i++){
+    //             jsonList[strs[i].split("=")[0]] = strs[i].split("=")[1];
     //         }
     //     }
-    // });
-    // var token = '7f9e4581-0d8f-43f9-95d1-6e09a3f98ff1';
+    //     return jsonList;
+    // }
+    var requestData = Vue.prototype.getSearch();
+    requestData.commodityType = requestData.commodityType == 1? '商品': '超市';
     if(localStorage.token){
         var token = localStorage.token;
     }
     $my.ajax({
         url: baseUrl + '/marketGoods/loadGoodsDetails.do',
         data: {
-            // token: token,
             commodityCode: requestData.commodityCode,
             commodityType: requestData.commodityType
         },
         method: 'get',
         success: function (data) {
             var data =  JSON.parse(data);
-            console.log(data);
             if(data.state){
                 var goods = data.data[0],
                     goodsDetails = goods.goodsDetails,
@@ -152,7 +123,8 @@ window.addEventListener('load',function () {
                         commodity: {},//商品信息
                         labelArr:[], //存放选择的label
                         num: 1, //购买数量
-                        have: 0,
+                        have: 0, //是否有库存
+
                     },
                     methods: {
                         //选择标签,选择时获取价格
@@ -160,18 +132,10 @@ window.addEventListener('load',function () {
                             var self = this;
                             this.labelArr[index].title = title;
                             this.labelArr[index].type = type;
-                            console.log({
-                                token: token,
-                                commodityCode: this.commodityCode,
-                                label: JSON.stringify(this.labelArr),
-                                nowPrice: this.nowPrice
-                            });
                             var selected =  this.labelArr.some(function (item) {
                                 return !item.type;
                             });
-                            console.log(selected);
                             if(selected) return;
-
                             $my.ajax({
                                 url: baseUrl + '/shopCart/loadNewCommodityPrice.do',
                                 data: {
@@ -183,33 +147,31 @@ window.addEventListener('load',function () {
                                 method: 'post',
                                 success: function (data) {
                                     var data = JSON.parse(data)
-                                    console.log(data);
                                     if(data.state){
-                                        if(data.data.have){
-                                            self.commodity.nowPrice = data.data.nowPrice;
-                                            self.commodity.stock = data.data.stock;
-                                            self.commodity.commodityCode = data.data.commodityCode;
-                                            self.commodity.commodityType = data.data.commodityType;
+                                        var _data = data.data;
+                                        if(_data.have){
+                                            self.commodity.image_url = _data.imageUrl;
+                                            self.commodity.nowPrice = _data.nowPrice;
+                                            self.commodity.stock = _data.stock;
+                                            self.commodity.commodityCode = _data.commodityCode;
+                                            self.commodity.commodityType = _data.commodityType;
                                         }else {
                                             self.commodity.nowPrice = '暂无库存';
+                                            self.commodity.stock = 0;
                                         }
-                                        self.have = data.data.have;
+                                        self.have = _data.have;
+                                        
                                     }
                                 }
                             });
                         },
                         buyNow: function () {
                             if(!this.have) return;
-                            console.log({
-                                token: token,
-                                nowPrice: this.commodity.nowPrice,
-                                commodityCode: this.commodityCode,
-                                commodityType: this.commodityType,
-                                num: this.num,
-                                dataList: JSON.stringify(this.labelArr)
-                            });
+                            if(this.num > this.commodity.stock){
+                                alert('商品库存不足');
+                                return;
+                            }
                             // 点击立即购买 => 确定 后 将购买到的商品存到 localStorage
-
                             $my.ajax({
                                 url: baseUrl + '/shopCart/nowBuyAllGoods.do',
                                 data: {
@@ -223,11 +185,9 @@ window.addEventListener('load',function () {
                                 method: 'post',
                                 success: function (data) {
                                     var data = JSON.parse(data);
-                                    console.log(this.data);
-                                    console.log(data);
                                     if(data.state){
-                                        console.log(data.data);
-                                        localStorage.confirmAnOrder = JSON.stringify(data.data);
+                                        var order = data.data;
+                                        localStorage.confirmAnOrder = JSON.stringify(order);
                                         location.href = './confirmAnOrder.html';
                                     }else {
                                         Vue.prototype.$goLogin();
@@ -248,9 +208,7 @@ window.addEventListener('load',function () {
                             },
                             method: 'post',
                             success: function (data) {
-                                console.log(this.data);
                                 var data = JSON.parse(data);
-                                console.log(data);
                                 if(data.state){
                                     var  label = data.data.lable; //用于填充label数组
                                     self.commodity = data.data;
@@ -267,9 +225,6 @@ window.addEventListener('load',function () {
                                     }else {
                                         self.have = 1;
                                     }
-
-                                    console.log(data.data);
-
                                 }else {
                                     Vue.prototype.$goLogin();
                                 }
@@ -308,7 +263,6 @@ window.addEventListener('load',function () {
                     },
                     methods: {
                         download: function () {
-                            console.log(this.downUrl);
                             var isdown = confirm('是否立即下载app');
                             if(isdown){
                                 if(!this.downUrl){
@@ -347,7 +301,6 @@ window.addEventListener('load',function () {
                     },
                     created: function () {
                         var ua = navigator.userAgent.toLowerCase();
-                       
                         if (/iphone|ipad|ipod/.test(ua)) {
                             this.ua = 'ios';
                         } else if (/android/.test(ua)) {
@@ -355,20 +308,9 @@ window.addEventListener('load',function () {
                         } else {
                             this.ua = 'pc';
                         }
-                        console.log(this.ua);
                     }
                 });
             }
-
         }
     });
-
-
-
-
-
-
-
-
-
 });
