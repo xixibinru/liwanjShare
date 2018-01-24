@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="css/forgetPwd.css">
 </head>
 <body>
-    <header  id="header"><a class="goBack">返回</a>忘记密码</header>
+    <!-- <header  id="header"><a class="goBack">返回</a>忘记密码</header> -->
     <main  id="main">
         <div>手机号<input type="text" v-model="name"></div>
         <div>验证码<input type="text" v-model="code"><div @click="getCode" :class="{disabled: state}" class="getCode">{{SMS_text}}</div></div>
