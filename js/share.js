@@ -3,7 +3,7 @@ window.onload = function () {
         function deviceType() {
             var ua = navigator.userAgent.toLowerCase();
             if (/iphone|ipad|ipod/.test(ua)) {
-                return '';
+                return 'https://itunes.apple.com/app/id1327660974?mt=8';
             } else if (/android/.test(ua)) {
                 return 'http://a.app.qq.com/o/simple.jsp?pkgname=com.lwj.liwanjia';
             } else {

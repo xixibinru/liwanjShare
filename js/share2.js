@@ -14,7 +14,8 @@ window.addEventListener('load',function () {
     //     }
     //     return jsonList;
     // }
-    var requestData = Vue.prototype.getSearch();
+
+    var requestData = Vue.prototype.$getSearch();
     requestData.commodityType = requestData.commodityType == 1? '商品': '超市';
     if(localStorage.token){
         var token = localStorage.token;

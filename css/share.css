@@ -48,6 +48,9 @@ header {
     border-radius: 0.1rem;
     background-color: #fff;
 }
+#register .register > div:first-child > input {
+    width: 4rem;
+}
 
 #register .info {
     height: 1.11rem;
@@ -73,6 +76,7 @@ header {
     font-size: 0.28rem;
     height: 1rem;
     margin-top: 0.05rem;
+    background-color: #fff;
 }
 
 #register .info input[type="button"] {
